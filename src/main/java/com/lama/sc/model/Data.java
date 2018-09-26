@@ -24,4 +24,17 @@ public class Data implements IData {
 		return this;
 	}
 
+	@Override
+	public void display() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		
+		for(int i = 0; i < content.length; ++i){
+			sb.append(content[i]);
+			sb.append(",");
+		}
+		
+		sb.append(content[content.length - 1]);
+	}
+
 }

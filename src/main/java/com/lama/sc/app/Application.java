@@ -8,11 +8,16 @@ public class Application {
 
 	public static void main(String[] args){
 		scenario1();
+		scenario2();
 	}
 	
 	private static void scenario1(){
 		IGenerator generator = Generator.getInstance();
 		IData dataset1 = generator.randomGeneration(100, -10000, 10000);
 		// ISort insertSort = InsertSort.getInstance().execute(dataset1);
+	}
+	
+	private static void scenario2(){
+		
 	}
 }

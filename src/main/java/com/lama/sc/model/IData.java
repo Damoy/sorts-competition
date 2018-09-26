@@ -8,5 +8,6 @@ public interface IData{
 	public IData set(int index, int value);
 	public int getLength();
 	public void display();
+	public IData clone();
 	
 }

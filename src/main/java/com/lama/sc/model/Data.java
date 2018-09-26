@@ -10,6 +10,13 @@ public class Data implements IData {
 		this.content = new int[size];
 	}
 	
+	private Data(int... content){
+		this.content = new int[content.length];
+		for(int i = 0; i < content.length; ++i){
+			this.content[i] = content[i];
+		}
+	}
+	
 	public static IData of(int size){
 		return new Data(size);
 	}
@@ -43,6 +50,11 @@ public class Data implements IData {
 	@Override
 	public int getLength() {
 		return content.length;
+	}
+	
+	@Override
+	public IData clone(){
+		return new Data(content);
 	}
 
 }

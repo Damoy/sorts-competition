@@ -24,4 +24,11 @@ public class Data implements IData {
 		return this;
 	}
 
+	@Override
+	public int getLength() {
+		return content.length;
+	}
+	
+	
+
 }

@@ -3,6 +3,7 @@ package com.lama.sc.app;
 import com.lama.sc.core.ISort;
 import com.lama.sc.core.InsertionSort;
 import com.lama.sc.core.MergeSort;
+import com.lama.sc.core.QuickSort;
 import com.lama.sc.generator.Generator;
 import com.lama.sc.model.IData;
 import com.lama.sc.utils.time.EnumTimeGranularity;
@@ -18,6 +19,8 @@ public class Application {
 		IData dataset = Generator.getInstance().randomGeneration(10, -1000, 1000);
 		processScenario(InsertionSort.getInstance(), dataset, EnumTimeGranularity.NANOSECONDS, "Insertion sort");
 		processScenario(MergeSort.getInstance(), dataset.clone(), EnumTimeGranularity.NANOSECONDS, "Merge sort");
+		processScenario(QuickSort.getInstance(), dataset.clone(), EnumTimeGranularity.NANOSECONDS, "Quick sort");
+
 	}
 	
 	private static void scenario2(){

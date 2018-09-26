@@ -6,12 +6,12 @@ import com.lama.sc.utils.Utils;
 
 public class Generator implements IGenerator {
 
-	private final static IGenerator GENERATOR = new Generator();
+	private final static IGenerator INSTANCE = new Generator();
 	
 	private Generator(){}
 	
 	public static IGenerator getInstance(){
-		return GENERATOR;
+		return INSTANCE;
 	}
 	
 	public IData randomGeneration(int size, int min, int max) {

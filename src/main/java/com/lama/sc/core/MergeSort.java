@@ -34,45 +34,42 @@ public class MergeSort implements ISort {
 		int n1 = mid - left + 1;
 		int n2 = right - mid;
 
-		/* Create temp arrays */
-		IData L = Data.of(n1);
-		IData R = Data.of(n2);
+		// Create temporary data
+		IData dl = Data.of(n1);
+		IData dr = Data.of(n2);
 
-		/* Copy data to temp arrays */
+		// Copy data to temporary ones
 		for (int i = 0; i < n1; ++i)
-			L.set(i, data.get(left + i));
+			dl.set(i, data.get(left + i));
 		for (int j = 0; j < n2; ++j)
-			R.set(j, data.get(mid + 1 + j));
+			dr.set(j, data.get(mid + 1 + j));
 
-		/* Merge the temp arrays */
-		// Initial indexes of first and second subarrays
+		// Merge the temporary data
 		int i = 0;
 		int j = 0;
-
-		// Initial index of merged sub-array
 		int k = left;
+		
 		while (i < n1 && j < n2) {
-			if(L.get(j) <= R.get(j)){
-				data.set(k, L.get(i));
+			if(dl.get(i) <= dr.get(j)){
+				data.set(k, dl.get(i));
 				++i;
 			} else {
-				data.set(k, R.get(j));
+				data.set(k, dr.get(j));
 				++j;
 			}
 			
 			k++;
 		}
 
-		/* Copy remaining elements of L[] if any */
+		// Copy remaining elements
 		while (i < n1) {
-			data.set(k, L.get(i));
+			data.set(k, dl.get(i));
 			++i;
 			++k;
 		}
 
-		/* Copy remaining elements of R[] if any */
 		while (j < n2) {
-			data.set(k, R.get(j));
+			data.set(k, dr.get(j));
 			++j;
 			++k;
 		}

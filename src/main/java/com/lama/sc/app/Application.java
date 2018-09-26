@@ -9,7 +9,9 @@ import com.lama.sc.model.IData;
 public class Application {
 
 	public static void main(String[] args){
+		scenario1();
 		scenario2();
+		scenario3();
 	}
 	
 	private static void scenario1(){

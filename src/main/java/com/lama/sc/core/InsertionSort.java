@@ -14,7 +14,6 @@ public class InsertionSort implements ISort{
 
 	@Override
 	public IData process(IData data) {
-
 		int size = data.getLength();
 
 		for(int i = 1; i < size; ++i) {
@@ -22,7 +21,6 @@ public class InsertionSort implements ISort{
 			int j = i - 1;
 
 			while(j >= 0 && data.get(j) > key) {
-				
 				data.set(j + 1, data.get(j));
 				j = j - 1;
 			}
@@ -31,7 +29,6 @@ public class InsertionSort implements ISort{
 		}
 		
 		return data;
-
 	}
 	
 }

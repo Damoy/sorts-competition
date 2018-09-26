@@ -36,5 +36,10 @@ public class Data implements IData {
 		
 		sb.append(content[content.length - 1]);
 	}
+	
+	@Override
+	public int getLength() {
+		return content.length;
+	}
 
 }

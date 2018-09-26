@@ -36,7 +36,8 @@ public class Data implements IData {
 		}
 		
 		sb.append(content[content.length - 1]);
-		Utils.println(sb.toString());
+		sb.append("]");	
+		Utils.println(sb);
 	}
 	
 	@Override

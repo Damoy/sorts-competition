@@ -10,3 +10,48 @@
 		
 		sb.append(content[content.length - 1]);
 	}
+	
+	
+	@Override
+	public IData process(IData data) {
+
+		int size = data.getLength();
+
+		for(int i = 1; i < size; ++i) {
+			int key = data.get(i);
+			int j = i - 1;
+
+			while(j >= 0 && data.get(j) > key) {
+				
+				data.set(j + 1, data.get(j));
+				j = j - 1;
+			}
+			
+			data.set(j + 1, key);
+		}
+		
+		return data;
+
+	}
+	
+	
+	@Override
+	public IData process(IData data) {
+		int size = data.getLength();
+		
+		for(int i = 2; i < size; ++i) {
+			int x = data.get(i);
+			int j = i;
+			
+			while(j > 1 && data.get(j - 1) > x) {
+				data.set(j, data.get(j - 1));
+				j = j - 1;
+			}
+			
+			data.set(j, x);
+		}
+		
+		return data;	
+	} 
+	
+	

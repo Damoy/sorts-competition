@@ -1,5 +1,6 @@
 package com.lama.sc.model;
 
+import com.lama.sc.utils.Utils;
 
 public class Data implements IData {
 
@@ -35,6 +36,9 @@ public class Data implements IData {
 		}
 		
 		sb.append(content[content.length - 1]);
+		sb.append("]");
+		
+		Utils.println(sb);
 	}
 	
 	@Override

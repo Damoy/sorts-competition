@@ -15,16 +15,13 @@ public class Application {
 	}
 	
 	private static void scenario1(){
-		IGenerator generator = Generator.getInstance();
-		IData dataset1 = generator.randomGeneration(100, -10000, 10000);
+		IData dataset1 = Generator.getInstance().randomGeneration(10, -1000, 1000);
 		IData dataset1Sorted = InsertionSort.getInstance().process(dataset1);
 		dataset1Sorted.display();
 	}
 	
 	private static void scenario2(){
-		IGenerator generator = Generator.getInstance();
-		IData dataset2 = generator.randomGeneration(20, -30, 30);
-		// dataset2.display();
+		IData dataset2 = Generator.getInstance().randomGeneration(10, -30, 30);
 		IData dataset2Sorted = InsertionSort.getInstance().process(dataset2);
 		dataset2Sorted.display();
 	}

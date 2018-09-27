@@ -31,13 +31,24 @@ public class Data implements IData {
 		content[index] = value;
 		return this;
 	}
+	
+	@Override
+	public IData reverse() {
+		for(int i = 0; i < content.length >> 1; ++i){
+			int tmp = content[i];
+			content[i] = content[content.length - i - 1];
+			content[content.length - i - 1] = tmp;
+		}
+		
+		return this;
+	}
 
 	@Override
 	public void display() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
 		
-		for(int i = 0; i < content.length; ++i){
+		for(int i = 0; i < content.length - 1; ++i){
 			sb.append(content[i]);
 			sb.append(",");
 		}
@@ -55,6 +66,11 @@ public class Data implements IData {
 	@Override
 	public IData clone(){
 		return new Data(content);
+	}
+
+	@Override
+	public int[] get() {
+		return content;
 	}
 
 }

@@ -1,43 +1,45 @@
 package com.lama.sc.app;
 
-import com.lama.sc.core.ISort;
+import com.lama.sc.core.HeapSort;
 import com.lama.sc.core.InsertionSort;
+import com.lama.sc.core.JavaSort;
 import com.lama.sc.core.MergeSort;
 import com.lama.sc.core.QuickSort;
+import com.lama.sc.execution.IScenario;
+import com.lama.sc.execution.IScenarioBuilder;
+import com.lama.sc.execution.ScenarioBuilder;
 import com.lama.sc.generator.Generator;
+import com.lama.sc.generator.IGenerator;
 import com.lama.sc.model.IData;
 import com.lama.sc.utils.time.EnumTimeGranularity;
-import com.lama.sc.utils.time.Time;
 
 public class Application {
 
-	public static void main(String[] args){
-		scenario1();
+	public static void main(String[] args) {
+		tutorial();
 	}
 	
-	private static void scenario1(){
-		IData dataset = Generator.getInstance().randomGeneration(10, -1000, 1000);
-		processScenario(InsertionSort.getInstance(), dataset, EnumTimeGranularity.NANOSECONDS, "Insertion sort");
-		processScenario(MergeSort.getInstance(), dataset.clone(), EnumTimeGranularity.NANOSECONDS, "Merge sort");
-		processScenario(QuickSort.getInstance(), dataset.clone(), EnumTimeGranularity.NANOSECONDS, "Quick sort");
+	private static void tutorial() {
+		// Data generator used to generate data to process
+		IGenerator generator = Generator.getInstance();
+		// One example of data set
+		IData dataset1 = generator.randomGeneration(10, -10, 10);
+		
+		// Scenario builder used to build scenarios
+		IScenarioBuilder scenarioBuilder = ScenarioBuilder.getInstance();
 
-	}
-	
-	private static void scenario2(){
-		processScenario(InsertionSort.getInstance(), Generator.getInstance().randomGeneration(10, -30, 30),
-				EnumTimeGranularity.NANOSECONDS, "Insertion sort");
-	}
-	
-	private static void scenario3(){
-		processScenario(MergeSort.getInstance(), Generator.getInstance().randomGeneration(10, -10, 10),
-				EnumTimeGranularity.NANOSECONDS, "Merge sort");
-	}
-	
-	private static void processScenario(ISort algo, IData dataset, EnumTimeGranularity granularity, String title){
-		Time.start();
-		algo.process(dataset);
-		Time.end();
-		Time.display(title, granularity);
-		dataset.display();
+		// Creating a scenario
+		scenarioBuilder.addEntry("Insertion sort", InsertionSort.getInstance(), dataset1);
+		scenarioBuilder.addEntry("Merge sort", MergeSort.getInstance(), dataset1);
+		scenarioBuilder.addEntry("Quick sort", QuickSort.getInstance(), dataset1);
+		scenarioBuilder.addEntry("Heap sort", HeapSort.getInstance(), dataset1);
+		scenarioBuilder.addEntry("Java sort", JavaSort.getInstance(), dataset1);
+		IScenario scenario1 = scenarioBuilder.build("Random generation");
+		
+		// Executes it 
+		scenario1.execute(EnumTimeGranularity.MICROSECONDS);
+		
+		// Display results to console
+		scenario1.output();
 	}
 }

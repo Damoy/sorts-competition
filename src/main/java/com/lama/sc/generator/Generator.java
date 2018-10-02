@@ -15,8 +15,18 @@ public class Generator implements IGenerator {
 		return INSTANCE;
 	}
 	
-	public IData randomGeneration(int size, int min, int max) {
+	public IData randomGeneration(int size, int min, int max, EnumRandomGenerationBound bound) {
 		IData data = Data.of(size);
+		
+		switch(bound){
+			case LOGN:
+				max = Utils.log2(max);
+				break;
+			case N2:
+				max = max * max;
+				break;
+			default:
+		}
 		
 		for(int i = 0; i < size; ++i)
 			data.set(i, Utils.irand(min, max));
@@ -26,7 +36,7 @@ public class Generator implements IGenerator {
 
 	@Override
 	public IData sortedGeneration(int size, int min, int max) {
-		return InsertionSort.getInstance().process(randomGeneration(size, min, max));
+		return InsertionSort.getInstance().process(randomGeneration(size, min, max, EnumRandomGenerationBound.N));
 	}
 
 	@Override

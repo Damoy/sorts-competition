@@ -8,6 +8,7 @@ import com.lama.sc.core.QuickSort;
 import com.lama.sc.execution.IScenario;
 import com.lama.sc.execution.IScenarioBuilder;
 import com.lama.sc.execution.ScenarioBuilder;
+import com.lama.sc.generator.EnumRandomGenerationBound;
 import com.lama.sc.generator.Generator;
 import com.lama.sc.generator.IGenerator;
 import com.lama.sc.model.IData;
@@ -23,7 +24,7 @@ public class Application {
 		// Data generator used to generate data to process
 		IGenerator generator = Generator.getInstance();
 		// One example of data set
-		IData dataset1 = generator.randomGeneration(10, -10, 10);
+		IData dataset1 = generator.randomGeneration(10, -10, 10, EnumRandomGenerationBound.N);
 		
 		// Scenario builder used to build scenarios
 		IScenarioBuilder scenarioBuilder = ScenarioBuilder.getInstance();

@@ -20,4 +20,8 @@ public final class Utils {
 		return SEED.nextInt((max - min) + 1) + min;
 	}
 	
+	public static int log2(int value){
+		return (int) (Math.log10(value) / Math.log10(2));
+	}
+	
 }

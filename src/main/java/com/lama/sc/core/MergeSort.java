@@ -58,7 +58,7 @@ public class MergeSort implements ISort {
 				++j;
 			}
 			
-			k++;
+			++k;
 		}
 
 		// Copy remaining elements

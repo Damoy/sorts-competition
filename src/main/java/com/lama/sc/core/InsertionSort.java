@@ -22,7 +22,7 @@ public class InsertionSort implements ISort{
 
 			while(j >= 0 && data.get(j) > key) {
 				data.set(j + 1, data.get(j));
-				j = j - 1;
+				--j;
 			}
 			
 			data.set(j + 1, key);

@@ -1,7 +1,5 @@
 package com.lama.sc.utils.time;
 
-import com.lama.sc.utils.Utils;
-
 public final class Time {
 
 	private static long start;
@@ -14,14 +12,11 @@ public final class Time {
 		start = System.nanoTime();
 	}
 	
-	public static void end(){
+	public static void stop(){
 		end = System.nanoTime() - start;
 	}
 	
-	public static void display(String title, EnumTimeGranularity granularity){
-		SBUILDER.append("----- ");
-		SBUILDER.append(title);
-		SBUILDER.append(" -----\n");
+	public static String output(EnumTimeGranularity granularity){
 		SBUILDER.append("Time: ");
 		
 		switch(granularity){
@@ -43,8 +38,9 @@ public final class Time {
 			break;
 		}
 		
-		Utils.println(SBUILDER);
+		String sbuilderContent = SBUILDER.toString();
 		resetStringBuilder();
+		return sbuilderContent;
 	}
 	
 	private static void resetStringBuilder(){

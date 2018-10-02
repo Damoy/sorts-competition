@@ -1,7 +1,5 @@
 package com.lama.sc.model;
 
-import com.lama.sc.utils.Utils;
-
 public class Data implements IData {
 
 	private int[] content;
@@ -44,7 +42,7 @@ public class Data implements IData {
 	}
 
 	@Override
-	public void display() {
+	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
 		
@@ -54,8 +52,8 @@ public class Data implements IData {
 		}
 		
 		sb.append(content[content.length - 1]);
-		sb.append("]");	
-		Utils.println(sb);
+		sb.append("]");
+		return sb.toString();
 	}
 	
 	@Override
@@ -72,5 +70,4 @@ public class Data implements IData {
 	public int[] get() {
 		return content;
 	}
-
 }

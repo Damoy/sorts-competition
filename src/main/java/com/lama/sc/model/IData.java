@@ -12,6 +12,4 @@ public interface IData {
 	public IData clone();
 	public IData reverse();
 	
-	public void display();
-	
 }

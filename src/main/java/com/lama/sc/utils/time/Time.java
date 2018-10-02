@@ -43,6 +43,26 @@ public final class Time {
 		return sbuilderContent;
 	}
 	
+	public static String getComputedTime(EnumTimeGranularity timeGranularity){
+		long computedTime = end;
+		
+		switch(timeGranularity){
+			case MICROSECONDS:
+				computedTime = end / 1000;
+				break;
+			case MILLISECONDS:
+				computedTime = end / 1000000;
+				break;
+			case SECONDS:
+				computedTime = end / 1000000000;
+				break;
+			case NANOSECONDS:
+			default:
+		}
+		
+		return String.valueOf(computedTime);
+	}
+	
 	private static void resetStringBuilder(){
 		SBUILDER.setLength(0);
 	}

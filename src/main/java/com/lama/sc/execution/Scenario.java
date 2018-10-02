@@ -21,16 +21,58 @@ public class Scenario implements IScenario {
 	}
 
 	@Override
-	public void execute(EnumTimeGranularity timeGranularity) {
+	public void execute(EnumTimeGranularity timeGranularity, EnumScenarioOutputMode outputMode) {
 		clear();
+		
+		switch(outputMode){
+		case DETAILED:
+			executeWithDetailedMode(timeGranularity);
+			break;
+		case TIME_ONLY:
+			executeWithTimeOnlyMode(timeGranularity);
+			break;
+		}
+	}
+	
+	private void executeWithDetailedMode(EnumTimeGranularity timeGranularity){
 		output.append(">> Starting scenario \"");
 		output.append(title);
 		output.append("\" ...\n");
-		entries.forEach(entry -> process(entry, timeGranularity));
+		entries.forEach(entry -> processWithDetailedMode(entry, timeGranularity));
 		output.append(">> Scenario ended successfully.");
 	}
 	
-	private void process(IScenarioEntry entry, EnumTimeGranularity timeGranularity) {
+	private void executeWithTimeOnlyMode(EnumTimeGranularity timeGranularity){
+		output.append("Time granularity: ");
+		output.append(EnumTimeGranularity.getString(timeGranularity));
+		output.append("\n\n[");
+		
+		for(int i = 0; i < entries.size() - 1; ++i){
+			IScenarioEntry entry = entries.get(i);
+			ISort sortAlgo = entry.getSortAlgorithm();
+			IData data = entry.getData().clone();
+			
+			Time.start();
+			sortAlgo.process(data);
+			Time.stop();
+			
+			output.append(Time.getComputedTime(timeGranularity));
+			output.append(",");
+		}
+		
+		IScenarioEntry entry = entries.get(entries.size() - 1);
+		ISort sortAlgo = entry.getSortAlgorithm();
+		IData data = entry.getData().clone();
+		
+		Time.start();
+		sortAlgo.process(data);
+		Time.stop();
+		
+		output.append(Time.getComputedTime(timeGranularity));
+		output.append("]");
+	}
+	
+	private void processWithDetailedMode(IScenarioEntry entry, EnumTimeGranularity timeGranularity) {
 		ISort sortAlgo = entry.getSortAlgorithm();
 		IData data = entry.getData().clone();
 		String title = entry.getTitle();
@@ -54,8 +96,13 @@ public class Scenario implements IScenario {
 	}
 	
 	@Override
-	public void output() {
+	public void display() {
 		Utils.println(toString());
+	}
+	
+	@Override
+	public void output() {
+		Utils.toFile(title, toString());
 	}
 	
 	@Override

@@ -20,6 +20,9 @@ import com.lama.sc.utils.time.EnumTimeGranularity;
 public class Application {
 
 	public static void main(String[] args) {
+		
+		
+			
 		flatGeneration("Insertion Sort", InsertionSort.getInstance());
 		flatGeneration("Heap Sort", HeapSort.getInstance());
 		flatGeneration("Java Sort", JavaSort.getInstance());

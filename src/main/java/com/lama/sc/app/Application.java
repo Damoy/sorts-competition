@@ -28,9 +28,9 @@ public class Application {
 		flatGeneration("Java Sort", JavaSort.getInstance());
 		flatGeneration("Merge Sort", MergeSort.getInstance());
 		flatGeneration("Quick Sort", QuickSort.getInstance()); 
-		// flatGeneration("Smooth Sort", SmoothSort.getInstance());
-
-
+		flatGeneration("Smooth Sort", SmoothSort.getInstance());
+		
+		IJustWantToTestMySort();
 
 	}
 
@@ -60,6 +60,30 @@ public class Application {
 				EnumScenarioOutputMode.TIME_ONLY));
 		scenario1.output();
 		scenarioBuilder.clear();
+	}
+	
+	private static void IJustWantToTestMySort() {
+		
+		IGenerator generator = Generator.getInstance();
+		IData dataset1 = generator.randomGeneration(10, -10, 10, EnumRandomGenerationBound.N);
+		IData dataset2 = generator.randomGeneration(10, -10, 20, EnumRandomGenerationBound.N);
+		IData dataset3 = generator.randomGeneration(10, -10, 30, EnumRandomGenerationBound.N);
+		IData dataset4 = generator.randomGeneration(100, -100, 100, EnumRandomGenerationBound.N);
+
+		
+		IScenarioBuilder scenarioBuilder = ScenarioBuilder.getInstance();
+
+		scenarioBuilder.addEntry("Smooth test 1", SmoothSort.getInstance(), dataset1);
+		scenarioBuilder.addEntry("Smooth test 2", SmoothSort.getInstance(), dataset2);
+		scenarioBuilder.addEntry("Smooth test 3", SmoothSort.getInstance(), dataset3);
+		scenarioBuilder.addEntry("Smooth test 4", SmoothSort.getInstance(), dataset4);
+		IScenario scenarioSmooth = scenarioBuilder.build("Random generation Smooth");
+
+		scenarioSmooth.execute(ScenarioConfig.of(EnumTimeGranularity.MICROSECONDS,
+				EnumScenarioOutputMode.DETAILED));
+		
+		scenarioSmooth.output();
+		
 	}
 
 	@SuppressWarnings("unused")

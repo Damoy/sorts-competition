@@ -29,7 +29,7 @@ public final class SmoothSort implements ISort {
 			866988873 
 	}; 
 
-	public <C extends Comparable<? super C>> IData smoothSort(IData data) { 
+	public IData smoothSort(IData data) { 
 		if (data.getLength() > 1) { 
 			smoothSort(data, 0, data.getLength() - 1); 
 		} 
@@ -114,7 +114,7 @@ public final class SmoothSort implements ISort {
 		array[head] = val;
 	} 
 
-	private <C extends Comparable<? super C>> void smoothSortTrinkle(int[] array, int p, 
+	private void smoothSortTrinkle(int[] array, int p, 
 			int pshift, int head, boolean isTrusty) { 
 
 		int val = array[head]; 

@@ -46,5 +46,10 @@ public class QuickSort implements ISort {
 
 		return l + 1;
 	}
+
+	@Override
+	public String getTitle() {
+		return "Quick";
+	}
 	
 }

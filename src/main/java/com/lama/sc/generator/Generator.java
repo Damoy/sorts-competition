@@ -20,7 +20,7 @@ public class Generator implements IGenerator {
 		
 		switch(bound){
 			case LOGN:
-				max = Utils.log2(max);
+				max = (int) Utils.log2(max);
 				break;
 			case N2:
 				max = max * max;

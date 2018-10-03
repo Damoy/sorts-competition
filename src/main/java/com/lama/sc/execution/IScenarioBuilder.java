@@ -5,7 +5,7 @@ import com.lama.sc.model.IData;
 
 public interface IScenarioBuilder {
 	
-	public IScenario build(String scenarioTitle);
+	public IScenario build(String applicationTitle, String scenarioTitle, int width, int height);
 	public IScenarioBuilder addEntry(String entryTitle, ISort sortAlgo, IData data);
 	public IScenarioBuilder clear();
 	

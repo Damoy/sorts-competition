@@ -20,4 +20,9 @@ public class JavaSort implements ISort {
 		return data;
 	}
 
+	@Override
+	public String getTitle() {
+		return "Java";
+	}
+
 }

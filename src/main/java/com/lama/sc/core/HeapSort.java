@@ -60,5 +60,10 @@ public class HeapSort implements ISort{
 			heapify(data, len, biggest);
 		}
 	}
+
+	@Override
+	public String getTitle() {
+		return "Heap";
+	}
 	
 }

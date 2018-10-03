@@ -11,72 +11,139 @@ import com.lama.sc.execution.IScenario;
 import com.lama.sc.execution.IScenarioBuilder;
 import com.lama.sc.execution.ScenarioBuilder;
 import com.lama.sc.execution.ScenarioConfig;
-import com.lama.sc.generator.EnumRandomGenerationBound;
 import com.lama.sc.generator.Generator;
 import com.lama.sc.generator.IGenerator;
 import com.lama.sc.model.IData;
-import com.lama.sc.utils.Chart;
+import com.lama.sc.rendering.Chart;
+import com.lama.sc.rendering.IChart;
 import com.lama.sc.utils.time.EnumTimeGranularity;
 
 public class Application {
 
 	public static void main(String[] args) {
-		  Chart chart = new Chart("Browser Usage Statistics", "Which Browser are you using?");
-	      chart.pack();
-	      chart.setVisible(true);
+		launchFlatWithAll(10).getChart().build().launch();
 	}
 	
-	private static void flatGeneration(String scenarioTitle, ISort sortAlgo){
+	private static void ignore(){
+		IChart chart = new Chart("Sorts competition", "Flat generation", 900, 500);
+		chart.addEntry("Insertion", 8, 23);
+		chart.addEntry("Insertion", 9, 30);
+		chart.addEntry("Merge", 8, 21);
+		chart.addEntry("Merge", 9, 36);
+		chart.build().launch();
+	}
+	
+	private static IScenario launchFlatWithAll(int times){
 		IGenerator generator = Generator.getInstance();
+		
+		String scenarioTitle = "Flat generation";
 		
 		int flatValue = 42;
-		int size = 2 ^ 4;
+		int size = 2 ^ 8;
 		
-		IData dataset2pow4 = generator.flatGeneration(size, flatValue);
-		IData dataset2pow5 = generator.flatGeneration(size << 1, flatValue);
-		IData dataset2pow6 = generator.flatGeneration(size << 2, flatValue);
-		IData dataset2pow7 = generator.flatGeneration(size << 3, flatValue);
-		IData dataset2pow8 = generator.flatGeneration(size << 4, flatValue);
+		IData dataset2pow8 = generator.flatGeneration(size, flatValue);
+		IData dataset2pow9 = generator.flatGeneration(size << 1, flatValue);
+		IData dataset2pow10 = generator.flatGeneration(size << 2, flatValue);
+		IData dataset2pow11 = generator.flatGeneration(size << 3, flatValue);
+		IData dataset2pow12 = generator.flatGeneration(size << 4, flatValue);
+		IData dataset2pow13 = generator.flatGeneration(size << 5, flatValue);
+		IData dataset2pow14 = generator.flatGeneration(size << 6, flatValue);
+		IData dataset2pow15 = generator.flatGeneration(size << 7, flatValue);
+		IData dataset2pow16 = generator.flatGeneration(size << 8, flatValue);
 		
 		IScenarioBuilder scenarioBuilder = ScenarioBuilder.getInstance();
 
-		scenarioBuilder.addEntry(scenarioTitle, sortAlgo, dataset2pow4);
-		scenarioBuilder.addEntry(scenarioTitle, sortAlgo, dataset2pow5);
-		scenarioBuilder.addEntry(scenarioTitle, sortAlgo, dataset2pow6);
-		scenarioBuilder.addEntry(scenarioTitle, sortAlgo, dataset2pow7);
-		scenarioBuilder.addEntry(scenarioTitle, sortAlgo, dataset2pow8);
+		input(scenarioBuilder, scenarioTitle, InsertionSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16);
+		input(scenarioBuilder, scenarioTitle, MergeSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16);
+		input(scenarioBuilder, scenarioTitle, QuickSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16);
+		input(scenarioBuilder, scenarioTitle, JavaSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16);
+		input(scenarioBuilder, scenarioTitle, HeapSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16);
 		
-		IScenario scenario1 = scenarioBuilder.build("Flat" + scenarioTitle);
+		IScenario scenario1 = scenarioBuilder.build("Sorts competition", scenarioTitle, 900, 500);
 		
 		scenario1.execute(ScenarioConfig.of(EnumTimeGranularity.MICROSECONDS,
-				EnumScenarioOutputMode.TIME_ONLY));
+				EnumScenarioOutputMode.TIME_ONLY), times);
 		scenario1.output();
-		scenarioBuilder.clear();
+		return scenario1;
 	}
 	
-	@SuppressWarnings("unused")
-	private static void tutorial() {
-		// Data generator used to generate data to process
-		IGenerator generator = Generator.getInstance();
-		// One example of data set
-		IData dataset1 = generator.randomGeneration(10, -10, 10, EnumRandomGenerationBound.N);
-		
-		// Scenario builder used to build scenarios
-		IScenarioBuilder scenarioBuilder = ScenarioBuilder.getInstance();
-
-		// Creating a scenario
-		scenarioBuilder.addEntry("Insertion sort", InsertionSort.getInstance(), dataset1);
-		scenarioBuilder.addEntry("Merge sort", MergeSort.getInstance(), dataset1);
-		scenarioBuilder.addEntry("Quick sort", QuickSort.getInstance(), dataset1);
-		scenarioBuilder.addEntry("Heap sort", HeapSort.getInstance(), dataset1);
-		scenarioBuilder.addEntry("Java sort", JavaSort.getInstance(), dataset1);
-		IScenario scenario1 = scenarioBuilder.build("Random generation");
-		
-		// Executes it 
-		scenario1.execute(ScenarioConfig.of(EnumTimeGranularity.MICROSECONDS,
-				EnumScenarioOutputMode.TIME_ONLY));
-		
-		// Display results to console
-		scenario1.output();
+	private static void input(IScenarioBuilder on, String title, ISort sortAlgo, IData... datasets){
+		for(IData data : datasets)
+			on.addEntry(title, sortAlgo, data);
 	}
+	
+//	private static void flatGeneration(String scenarioTitle, ISort sortAlgo){
+//		IGenerator generator = Generator.getInstance();
+//		
+//		int flatValue = 42;
+//		int size = 2 ^ 8;
+//		
+//		IData dataset2pow8 = generator.flatGeneration(size, flatValue);
+//		IData dataset2pow9 = generator.flatGeneration(size << 1, flatValue);
+//		IData dataset2pow10 = generator.flatGeneration(size << 2, flatValue);
+//		IData dataset2pow11 = generator.flatGeneration(size << 3, flatValue);
+//		IData dataset2pow12 = generator.flatGeneration(size << 4, flatValue);
+//		IData dataset2pow13 = generator.flatGeneration(size << 5, flatValue);
+//		IData dataset2pow14 = generator.flatGeneration(size << 6, flatValue);
+//		IData dataset2pow15 = generator.flatGeneration(size << 7, flatValue);
+//		IData dataset2pow16 = generator.flatGeneration(size << 8, flatValue);
+//		
+//		IScenarioBuilder scenarioBuilder = ScenarioBuilder.getInstance();
+//
+//		scenarioBuilder.addEntry(scenarioTitle, sortAlgo, dataset2pow8);
+//		scenarioBuilder.addEntry(scenarioTitle, sortAlgo, dataset2pow9);
+//		scenarioBuilder.addEntry(scenarioTitle, sortAlgo, dataset2pow10);
+//		scenarioBuilder.addEntry(scenarioTitle, sortAlgo, dataset2pow11);
+//		scenarioBuilder.addEntry(scenarioTitle, sortAlgo, dataset2pow12);
+//		scenarioBuilder.addEntry(scenarioTitle, sortAlgo, dataset2pow13);
+//		scenarioBuilder.addEntry(scenarioTitle, sortAlgo, dataset2pow14);
+//		scenarioBuilder.addEntry(scenarioTitle, sortAlgo, dataset2pow15);
+//		scenarioBuilder.addEntry(scenarioTitle, sortAlgo, dataset2pow16);
+//		
+//		IScenario scenario1 = scenarioBuilder.build("Flat" + scenarioTitle);
+//		
+//		scenario1.execute(ScenarioConfig.of(EnumTimeGranularity.MICROSECONDS,
+//				EnumScenarioOutputMode.TIME_ONLY));
+//		scenario1.output();
+//		
+//		// launch rendering
+//		scenario1.getChart().build().launch();
+//		scenarioBuilder.clear();
+//	}
+//	
+//	@SuppressWarnings("unused")
+//	private static void tutorial() {
+//		// Data generator used to generate data to process
+//		IGenerator generator = Generator.getInstance();
+//		// One example of data set
+//		IData dataset1 = generator.randomGeneration(10, -10, 10, EnumRandomGenerationBound.N);
+//		
+//		// Scenario builder used to build scenarios
+//		IScenarioBuilder scenarioBuilder = ScenarioBuilder.getInstance();
+//
+//		// Creating a scenario
+//		scenarioBuilder.addEntry("Insertion sort", InsertionSort.getInstance(), dataset1);
+//		scenarioBuilder.addEntry("Merge sort", MergeSort.getInstance(), dataset1);
+//		scenarioBuilder.addEntry("Quick sort", QuickSort.getInstance(), dataset1);
+//		scenarioBuilder.addEntry("Heap sort", HeapSort.getInstance(), dataset1);
+//		scenarioBuilder.addEntry("Java sort", JavaSort.getInstance(), dataset1);
+//		IScenario scenario1 = scenarioBuilder.build("Random generation");
+//		
+//		// Executes it 
+//		scenario1.execute(ScenarioConfig.of(EnumTimeGranularity.MICROSECONDS,
+//				EnumScenarioOutputMode.TIME_ONLY));
+//		
+//		// Display results to console
+//		scenario1.output();
+//	}
 }

@@ -29,6 +29,7 @@ public class MergeSort implements ISort {
 		return data;
 	}
 	
+	// TODO only one buffer
 	void merge(IData data, int left, int mid, int right) {
 		// Find sizes of two sub-arrays to be merged
 		int n1 = mid - left + 1;
@@ -73,6 +74,11 @@ public class MergeSort implements ISort {
 			++j;
 			++k;
 		}
+	}
+
+	@Override
+	public String getTitle() {
+		return "Merge";
 	}
 	
 }

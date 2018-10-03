@@ -123,5 +123,308 @@ public final class ScenarioConfig {
 	
 
 }
+
+
+package com.lama.sc.utils;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.swing.JFrame;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
+public class Chart extends JFrame {
+
+	private static final long serialVersionUID = 1L;
 	
+	private Map<String, XYSeries> data;
+	private String title;
+	
+	private int width;
+	private int height;
+	
+	public Chart(String applicationTitle, String chartTitle, int width, int height) {
+		super(applicationTitle);
+		this.title = chartTitle;
+		this.data = new HashMap<>();
+	}
+	
+	public Chart build(){
+		// based on the dataset we create the chart
+		JFreeChart pieChart = ChartFactory.createXYLineChart(title, "Data Size", "Time", getDataset(),
+				PlotOrientation.VERTICAL, true, true, false);
+		// Adding chart into a chart panel
+		ChartPanel chartPanel = new ChartPanel(pieChart);
+		// settind default size
+		chartPanel.setPreferredSize(new java.awt.Dimension(width, height));
+		// add to contentPane
+		setContentPane(chartPanel);
+		return this;
+	}
+	
+	public void createSerie(String title){
+		
+	}
+	
+	private XYDataset getDataset(){
+		final XYSeriesCollection dataset = new XYSeriesCollection();
+		Iterator<Entry<String, XYSeries>> it = data.entrySet().iterator();
+		
+		while(it.hasNext()){
+			Entry<String, XYSeries> entry = it.next();
+			
+		}
+	}
+
+	private XYDataset createDataset() {
+		final XYSeries firefox = new XYSeries("Firefox");
+		firefox.add(1.0, 1.0);
+		firefox.add(2.0, 3.0);
+		firefox.add(3.0, 4.0);
+
+		final XYSeries chrome = new XYSeries("Chrome");
+		chrome.add(1.0, 4.0);
+		chrome.add(2.0, 6.0);
+		chrome.add(3.0, 5.0);
+
+		final XYSeries iexplorer = new XYSeries("InternetExplorer");
+		iexplorer.add(3.0, 4.0);
+		iexplorer.add(4.0, 5.0);
+		iexplorer.add(5.0, 4.0);
+
+		final XYSeriesCollection dataset = new XYSeriesCollection();
+		dataset.addSeries(firefox);
+		dataset.addSeries(chrome);
+		dataset.addSeries(iexplorer);
+
+		return dataset;
+	}
+
+}
+
+
+
+package com.lama.sc.utils;
+
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JFrame;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
+public class Chart extends JFrame implements IChart{
+
+	private static final long serialVersionUID = 463815431520813632L;
+	
+	private Map<String, XYSeries> data; 
+	private String title;
+	
+	private int width;
+	private int height;
+	
+	public Chart(String applicationTitle, String chartTitle, int width, int height) {
+		super(applicationTitle);
+		this.title = chartTitle;
+		this.data = new HashMap<>();
+	}
+	
+	@Override
+	public IChart build(){
+		// based on the dataset we create the chart
+		JFreeChart pieChart = ChartFactory.createXYLineChart(title, "Data Size", "Time", getDataset(),
+				PlotOrientation.VERTICAL, true, true, false);
+		// Adding chart into a chart panel
+		ChartPanel chartPanel = new ChartPanel(pieChart);
+		// settind default size
+		chartPanel.setPreferredSize(new java.awt.Dimension(width, height));
+		// add to contentPane
+		setContentPane(chartPanel);
+		return this;
+	}
+	
+	private XYDataset getDataset(){
+		XYSeriesCollection dataset = new XYSeriesCollection();
+		data.values().forEach(serie -> dataset.addSeries(serie));
+		return dataset;
+	}
+	
+	public IChart addEntry(String serieTitle, int dataSize, int time){
+		if(data.containsKey(serieTitle)){
+			data.get(serieTitle).add(dataSize, time);
+		} else {
+			XYSeries newSerie = new XYSeries(serieTitle);
+			newSerie.add(dataSize, time);
+			data.put(serieTitle, newSerie);
+		}
+		
+		return this;
+	}
+	
+}
+//		  Chart chart = new Chart("Browser Usage Statistics", "Which Browser are you using?");
+//	      chart.pack();
+//	      chart.setVisible(true);
+
+	
+	
+	
+	
+	
+	//
+	
+	
+	
+	package com.lama.sc.utils.rendering;
+
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JFrame;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
+public class Chart extends JFrame implements IChart{
+
+	private static final long serialVersionUID = 463815431520813632L;
+	
+	private Map<String, XYSeries> data; 
+	private String title;
+	
+	private int width;
+	private int height;
+	
+	public Chart(String applicationTitle, String chartTitle, int width, int height) {
+		super(applicationTitle);
+		this.title = chartTitle;
+		this.data = new HashMap<>();
+		
+		JFreeChart pieChart = ChartFactory.createXYLineChart(title, applicationTitle, chartTitle, getDataset(),
+				PlotOrientation.VERTICAL, true, true, false);
+		// Adding chart into a chart panel
+		ChartPanel chartPanel = new ChartPanel(pieChart);
+		// settind default size
+		chartPanel.setPreferredSize(new java.awt.Dimension(width, height));
+		// add to contentPane
+		setContentPane(chartPanel);
+	}
+	
+	@Override
+	public IChart build(){
+		// based on the dataset we create the chart
+		JFreeChart pieChart = ChartFactory.createXYLineChart(title, "Data Size", "Time", getDataset(),
+				PlotOrientation.VERTICAL, true, true, false);
+		// Adding chart into a chart panel
+		ChartPanel chartPanel = new ChartPanel(pieChart);
+		// settind default size
+		chartPanel.setPreferredSize(new java.awt.Dimension(width, height));
+		// add to contentPane
+		setContentPane(chartPanel);
+		return this;
+	}
+	
+	@Override
+	public void launch(){
+		pack();
+		requestFocus();
+		setVisible(true);
+	}
+	
+	private XYDataset getDataset(){
+		XYSeriesCollection dataset = new XYSeriesCollection();
+		data.values().forEach(serie -> dataset.addSeries(serie));
+		return dataset;
+	}
+	
+	public IChart addEntry(String serieTitle, int dataSize, int time){
+		if(data.containsKey(serieTitle)){
+			data.get(serieTitle).add(dataSize, time);
+		} else {
+			XYSeries newSerie = new XYSeries(serieTitle);
+			newSerie.add(dataSize, time);
+			data.put(serieTitle, newSerie);
+		}
+		
+		return this;
+	}
+	
+	
+	// 
+	
+	package com.lama.sc.utils.rendering;
+
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JFrame;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
+public class Chart extends JFrame implements IChart {
+
+	private static final long serialVersionUID = 1L;
+	
+	private Map<String, XYSeries> data; 
+	private String title;
+	
+	private int width;
+	private int height;
+	
+	private Chart(String applicationTitle, String chartTitle, int width, int height, XYSeriesCollection collection) {
+		super(applicationTitle);
+		this.title = chartTitle;
+		this.data = new HashMap<>();
+		this.width = width;
+		this.height = height;
+		
+		JFreeChart pieChart = ChartFactory.createXYLineChart(title, applicationTitle, chartTitle, collection,
+				PlotOrientation.VERTICAL, true, true, false);
+		// Adding chart into a chart panel
+		ChartPanel chartPanel = new ChartPanel(pieChart);
+		// settind default size
+		chartPanel.setPreferredSize(new java.awt.Dimension(width, height));
+		// add to contentPane
+		this.setContentPane(chartPanel);
+	}
+	
+	@Override
+	public IChart launch(){
+		this.pack();
+		this.requestFocus();
+		this.setVisible(true);
+		return this;
+	}
+	
+	public static IChart from(ChartConfig config){
+		
+	}
+	
+}
+	
+	
+}
 	

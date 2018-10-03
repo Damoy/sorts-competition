@@ -30,5 +30,10 @@ public class InsertionSort implements ISort{
 		
 		return data;
 	}
+
+	@Override
+	public String getTitle() {
+		return "Insertion";
+	}
 	
 }

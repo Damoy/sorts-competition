@@ -27,8 +27,8 @@ public class ScenarioBuilder implements IScenarioBuilder {
 	}
 	
 	@Override
-	public IScenario build(String scenarioTitle) {
-		return new Scenario(scenarioTitle, entries);
+	public IScenario build(String applicationTitle, String scenarioTitle, int width, int height) {
+		return new Scenario(applicationTitle, scenarioTitle, width, height, entries);
 	}
 	
 	@Override

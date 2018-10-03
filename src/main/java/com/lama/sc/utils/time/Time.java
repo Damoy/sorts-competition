@@ -43,7 +43,7 @@ public final class Time {
 		return sbuilderContent;
 	}
 	
-	public static String getComputedTime(EnumTimeGranularity timeGranularity){
+	public static long getComputedTime(EnumTimeGranularity timeGranularity){
 		long computedTime = end;
 		
 		switch(timeGranularity){
@@ -60,7 +60,7 @@ public final class Time {
 			default:
 		}
 		
-		return String.valueOf(computedTime);
+		return computedTime;
 	}
 	
 	private static void resetStringBuilder(){

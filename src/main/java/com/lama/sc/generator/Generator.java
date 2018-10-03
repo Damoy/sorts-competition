@@ -24,6 +24,7 @@ public class Generator implements IGenerator {
 				// max = (int) Utils.log2(max);
 				for(int i = 0; i < size; ++i)
 					data.set(i, (int) Utils.log2(Utils.irand(min, max)));
+				
 				break;
 			case N2:
 				// max = max * max;
@@ -37,6 +38,7 @@ public class Generator implements IGenerator {
 			case N:
 				for(int i = 0; i < size; ++i)
 					data.set(i, Utils.irand(min, max));
+				
 				break;
 		}
 		

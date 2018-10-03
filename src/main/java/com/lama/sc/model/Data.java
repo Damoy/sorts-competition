@@ -57,6 +57,24 @@ public class Data implements IData {
 	}
 	
 	@Override
+	public boolean equals(Object o){
+		if(o == null)
+			return false;
+		
+		Data d = (Data) o;
+		
+		if(d.getLength() != getLength())
+			return false;
+		
+		for(int i = 0; i < d.getLength(); ++i) {
+			if(d.get()[i] != get()[i])
+				return false;
+		}
+		
+		return true;
+	}
+	
+	@Override
 	public int getLength() {
 		return content.length;
 	}

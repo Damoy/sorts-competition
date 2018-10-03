@@ -15,16 +15,21 @@ import com.lama.sc.generator.EnumRandomGenerationBound;
 import com.lama.sc.generator.Generator;
 import com.lama.sc.generator.IGenerator;
 import com.lama.sc.model.IData;
+import com.lama.sc.utils.Chart;
 import com.lama.sc.utils.time.EnumTimeGranularity;
 
 public class Application {
 
 	public static void main(String[] args) {
-		flatGeneration("Insertion Sort", InsertionSort.getInstance());
+	/*	flatGeneration("Insertion Sort", InsertionSort.getInstance());
 		flatGeneration("Heap Sort", HeapSort.getInstance());
 		flatGeneration("Java Sort", JavaSort.getInstance());
 		flatGeneration("Merge Sort", MergeSort.getInstance());
-		flatGeneration("Quick Sort", QuickSort.getInstance());
+		flatGeneration("Quick Sort", QuickSort.getInstance()); */
+		
+		  Chart chart = new Chart("Browser Usage Statistics", "Which Browser are you using?");
+	      chart.pack();
+	      chart.setVisible(true);
 	}
 	
 	private static void flatGeneration(String scenarioTitle, ISort sortAlgo){

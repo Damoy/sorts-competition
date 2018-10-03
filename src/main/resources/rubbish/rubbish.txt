@@ -55,3 +55,73 @@
 	} 
 	
 	
+	package com.lama.sc.execution;
+
+import com.lama.sc.utils.time.EnumTimeGranularity;
+
+public final class ScenarioConfig {
+	
+	private EnumTimeGranularity timeGranularity;
+	private EnumScenarioOutputMode outputMode;
+	private int sizeStart;
+	private int stepMul; 
+	private int highBound;
+	
+	private ScenarioConfig(EnumTimeGranularity timeGranularity, EnumScenarioOutputMode outputMode, int sizeStart,
+			int stepMul, int highBound) {
+		this.timeGranularity = timeGranularity;
+		this.outputMode = outputMode;
+		this.sizeStart = sizeStart;
+		this.stepMul = stepMul;
+		this.highBound = highBound;
+	}
+	
+	public static ScenarioConfig of(EnumTimeGranularity timeGranularity, EnumScenarioOutputMode outputMode, int sizeStart,
+			int stepMul, int highBound){
+		return new ScenarioConfig(timeGranularity, outputMode, sizeStart, stepMul, highBound);
+	}
+
+	public EnumTimeGranularity getTimeGranularity() {
+		return timeGranularity;
+	}
+
+	public void setTimeGranularity(EnumTimeGranularity timeGranularity) {
+		this.timeGranularity = timeGranularity;
+	}
+
+	public EnumScenarioOutputMode getOutputMode() {
+		return outputMode;
+	}
+
+	public void setOutputMode(EnumScenarioOutputMode outputMode) {
+		this.outputMode = outputMode;
+	}
+
+	public int getSizeStart() {
+		return sizeStart;
+	}
+
+	public void setSizeStart(int sizeStart) {
+		this.sizeStart = sizeStart;
+	}
+
+	public int getStepMul() {
+		return stepMul;
+	}
+
+	public void setStepMul(int stepMul) {
+		this.stepMul = stepMul;
+	}
+
+	public int getHighBound() {
+		return highBound;
+	}
+
+	public void setHighBound(int highBound) {
+		this.highBound = highBound;
+	}
+	
+
+}
+	
+	

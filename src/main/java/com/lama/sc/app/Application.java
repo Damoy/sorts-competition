@@ -10,6 +10,7 @@ import com.lama.sc.execution.EnumScenarioOutputMode;
 import com.lama.sc.execution.IScenario;
 import com.lama.sc.execution.IScenarioBuilder;
 import com.lama.sc.execution.ScenarioBuilder;
+import com.lama.sc.execution.ScenarioConfig;
 import com.lama.sc.generator.EnumRandomGenerationBound;
 import com.lama.sc.generator.Generator;
 import com.lama.sc.generator.IGenerator;
@@ -19,8 +20,11 @@ import com.lama.sc.utils.time.EnumTimeGranularity;
 public class Application {
 
 	public static void main(String[] args) {
-		// tutorial();
 		flatGeneration("Insertion Sort", InsertionSort.getInstance());
+		flatGeneration("Heap Sort", HeapSort.getInstance());
+		flatGeneration("Java Sort", JavaSort.getInstance());
+		flatGeneration("Merge Sort", MergeSort.getInstance());
+		flatGeneration("Quick Sort", QuickSort.getInstance());
 	}
 	
 	private static void flatGeneration(String scenarioTitle, ISort sortAlgo){
@@ -43,11 +47,12 @@ public class Application {
 		scenarioBuilder.addEntry(scenarioTitle, sortAlgo, dataset2pow7);
 		scenarioBuilder.addEntry(scenarioTitle, sortAlgo, dataset2pow8);
 		
-		IScenario scenario1 = scenarioBuilder.build("Random generation");
+		IScenario scenario1 = scenarioBuilder.build("Flat" + scenarioTitle);
 		
-		scenario1.execute(EnumTimeGranularity.MICROSECONDS, EnumScenarioOutputMode.TIME_ONLY);
-		scenario1.display();
+		scenario1.execute(ScenarioConfig.of(EnumTimeGranularity.MICROSECONDS,
+				EnumScenarioOutputMode.TIME_ONLY));
 		scenario1.output();
+		scenarioBuilder.clear();
 	}
 	
 	@SuppressWarnings("unused")
@@ -69,7 +74,8 @@ public class Application {
 		IScenario scenario1 = scenarioBuilder.build("Random generation");
 		
 		// Executes it 
-		scenario1.execute(EnumTimeGranularity.MICROSECONDS, EnumScenarioOutputMode.DETAILED);
+		scenario1.execute(ScenarioConfig.of(EnumTimeGranularity.MICROSECONDS,
+				EnumScenarioOutputMode.TIME_ONLY));
 		
 		// Display results to console
 		scenario1.output();

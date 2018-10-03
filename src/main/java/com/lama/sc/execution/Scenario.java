@@ -21,15 +21,15 @@ public class Scenario implements IScenario {
 	}
 
 	@Override
-	public void execute(EnumTimeGranularity timeGranularity, EnumScenarioOutputMode outputMode) {
+	public void execute(ScenarioConfig config) {
 		clear();
 		
-		switch(outputMode){
+		switch(config.getOutputMode()){
 		case DETAILED:
-			executeWithDetailedMode(timeGranularity);
+			executeWithDetailedMode(config.getTimeGranularity());
 			break;
 		case TIME_ONLY:
-			executeWithTimeOnlyMode(timeGranularity);
+			executeWithTimeOnlyMode(config.getTimeGranularity());
 			break;
 		}
 	}

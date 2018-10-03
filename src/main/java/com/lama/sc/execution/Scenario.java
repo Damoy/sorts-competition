@@ -15,7 +15,7 @@ public class Scenario implements IScenario {
 	private StringBuilder output;
 	private String applicationTitle;
 	private String scenarioTitle;
-	private SortVisualizer chart;
+	private SortVisualizer visualiser;
 	private int chartWidth;
 	private int chartHeight;
 	
@@ -26,7 +26,7 @@ public class Scenario implements IScenario {
 		this.chartWidth = chartWidth;
 		this.chartHeight = chartHeight;
 		this.output = new StringBuilder();
-		this.chart = new SortVisualizer(applicationTitle, scenarioTitle, chartWidth, chartHeight, null, null);
+		this.visualiser = new SortVisualizer(applicationTitle, scenarioTitle, chartWidth, chartHeight, null, null);
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class Scenario implements IScenario {
 		EnumTimeGranularity timeGranularity = config.getTimeGranularity();
 		int times = config.getTimes();
 		
-		chart.setYAxisTitle("Data size (" + EnumTimeGranularity.getString(timeGranularity) + ")");
+		visualiser.setYAxisTitle("Data size (" + EnumTimeGranularity.getString(timeGranularity) + ")");
 		
 		output.append(">> Starting scenario \"");
 		output.append(scenarioTitle);
@@ -84,8 +84,8 @@ public class Scenario implements IScenario {
 			output.append(EnumTimeGranularity.getString(timeGranularity));
 			output.append("\n");
 			
-			// updating the chart
-			chart.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()), averageExecutionTime);
+			// updating the visualizer
+			visualiser.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()), averageExecutionTime);
 		}
 		
 		output.append(">> Scenario ended successfully.");
@@ -125,8 +125,8 @@ public class Scenario implements IScenario {
 			output.append(averageExecutionTime);
 			output.append("\n");
 			
-			// updating the chart
-			chart.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()), averageExecutionTime);
+			// updating the visualizer
+			visualiser.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()), averageExecutionTime);
 			output.append(averageExecutionTime);
 			output.append(",");
 		}
@@ -151,15 +151,15 @@ public class Scenario implements IScenario {
 		output.append(averageExecutionTime);
 		output.append("\n");
 		
-		// updating the chart
-		chart.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()), averageExecutionTime);
+		// updating the visualizer
+		visualiser.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()), averageExecutionTime);
 		output.append(averageExecutionTime);
 		output.append("]\n");
 	}
 	
 	private void clear() {
 		output.setLength(0);
-		chart = new SortVisualizer(applicationTitle, scenarioTitle, chartWidth, chartHeight, null, null);
+		visualiser = new SortVisualizer(applicationTitle, scenarioTitle, chartWidth, chartHeight, null, null);
 	}
 	
 	@Override
@@ -179,7 +179,7 @@ public class Scenario implements IScenario {
 
 	@Override
 	public SortVisualizer getChart() {
-		return chart;
+		return visualiser;
 	}
 	
 }

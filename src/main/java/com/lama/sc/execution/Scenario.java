@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.lama.sc.core.ISort;
 import com.lama.sc.model.IData;
-import com.lama.sc.rendering.Chart;
 import com.lama.sc.utils.Utils;
 import com.lama.sc.utils.time.EnumTimeGranularity;
+import com.lama.sc.utils.time.Time;
+import com.lama.sc.visualisation.SortVisualizer;
 
 public class Scenario implements IScenario {
 
@@ -14,7 +15,7 @@ public class Scenario implements IScenario {
 	private StringBuilder output;
 	private String applicationTitle;
 	private String scenarioTitle;
-	private Chart chart;
+	private SortVisualizer chart;
 	private int chartWidth;
 	private int chartHeight;
 	
@@ -25,89 +26,140 @@ public class Scenario implements IScenario {
 		this.chartWidth = chartWidth;
 		this.chartHeight = chartHeight;
 		this.output = new StringBuilder();
-		this.chart = new Chart(applicationTitle, scenarioTitle, chartWidth, chartHeight);
+		this.chart = new SortVisualizer(applicationTitle, scenarioTitle, chartWidth, chartHeight, null, null);
 	}
 
 	@Override
-	public void execute(ScenarioConfig config, int times) {
+	public void execute(ScenarioConfig config) {
 		clear();
 		
 		switch(config.getOutputMode()){
 		case DETAILED:
-			executeWithDetailedMode(config.getTimeGranularity(), times);
+			executeWithDetailedMode(config);
 			break;
 		case TIME_ONLY:
-			executeWithTimeOnlyMode(config.getTimeGranularity(), times);
+			executeWithTimeOnlyMode(config);
 			break;
 		}
 	}
 	
-	// TODO
-	@Deprecated
-	private void executeWithDetailedMode(EnumTimeGranularity timeGranularity, int times){
+	private void executeWithDetailedMode(ScenarioConfig config) {
+		EnumTimeGranularity timeGranularity = config.getTimeGranularity();
+		int times = config.getTimes();
+		
+		chart.setYAxisTitle("Data size (" + EnumTimeGranularity.getString(timeGranularity) + ")");
+		
 		output.append(">> Starting scenario \"");
 		output.append(scenarioTitle);
 		output.append("\" ...\n");
-		entries.forEach(entry -> processWithDetailedMode(entry, timeGranularity));
+		
+		ISort sortAlgo;
+		IData data ;
+		long averageExecutionTime;
+
+		for(IScenarioEntry entry : entries) {
+			sortAlgo = entry.getSortAlgorithm();
+			data = entry.getData();
+			averageExecutionTime = 0L;
+			
+			output.append("--> ");
+			output.append(sortAlgo.getTitle());
+			output.append("\n");
+			
+			for(int t = 0; t < times; ++t) {
+				data = data.clone();
+				long start = System.nanoTime();
+				sortAlgo.process(data);
+				// updating the entry result
+				averageExecutionTime += (System.nanoTime() - start);
+			}
+			
+			// In order to obtain nanoseconds, microseconds or milliseconds (logarithmic)
+			averageExecutionTime = Utils.log2(Time.getComputedTime(averageExecutionTime / times, timeGranularity));
+			
+			output.append(data.toString());
+			output.append("\nAverage execution time: ");
+			output.append(averageExecutionTime);
+			output.append(" ");
+			output.append(EnumTimeGranularity.getString(timeGranularity));
+			output.append("\n");
+			
+			// updating the chart
+			chart.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()), averageExecutionTime);
+		}
+		
 		output.append(">> Scenario ended successfully.");
 	}
 	
-	private void executeWithTimeOnlyMode(EnumTimeGranularity timeGranularity, int times){
+	private void executeWithTimeOnlyMode(ScenarioConfig config) {
+		EnumTimeGranularity timeGranularity = config.getTimeGranularity();
+		int times = config.getTimes();
+		
 		output.append("Time granularity: ");
 		output.append(EnumTimeGranularity.getString(timeGranularity));
 		output.append("\n\n[");
 		
+		IScenarioEntry entry;
+		ISort sortAlgo;
+		IData data;
+		long averageExecutionTime;
+		
 		for(int i = 0; i < entries.size() - 1; ++i){
-			IScenarioEntry entry = entries.get(i);
-			ISort sortAlgo = entry.getSortAlgorithm();
-			IData data = entry.getData().clone();
+			entry = entries.get(i);
+			sortAlgo = entry.getSortAlgorithm();
+			data = entry.getData();
+			averageExecutionTime = 0L;
 			
-			long start = System.nanoTime();
-			sortAlgo.process(data);
-			long computedTime = System.nanoTime() - start;
+			for(int t = 0; t < times; ++t) {
+				data = data.clone();
+				long start = System.nanoTime();
+				sortAlgo.process(data);
+				// updating the entry result
+				averageExecutionTime += (System.nanoTime() - start);
+			}
 			
-			// here constructs step by step the chart
-			chart.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()), Utils.log2(computedTime));
-			output.append(computedTime);
+			averageExecutionTime = Utils.log2(Time.getComputedTime(averageExecutionTime / times, timeGranularity));
+			
+			output.append(data.toString());
+			output.append("\n");
+			output.append(averageExecutionTime);
+			output.append("\n");
+			
+			// updating the chart
+			chart.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()), averageExecutionTime);
+			output.append(averageExecutionTime);
 			output.append(",");
 		}
 		
-		IScenarioEntry entry = entries.get(entries.size() - 1);
-		ISort sortAlgo = entry.getSortAlgorithm();
-		IData data = entry.getData().clone();
+		// last iteration
+		entry = entries.get(entries.size() - 1);
+		sortAlgo = entry.getSortAlgorithm();
+		data = entry.getData();
+		averageExecutionTime = 0L;
 		
-		long start = System.nanoTime();
-		sortAlgo.process(data);
-		long computedTime = System.nanoTime() - start;
+		for(int t = 0; t < times; ++t) {
+			long start = System.nanoTime();
+			sortAlgo.process(data.clone());
+			// updating the entry result
+			averageExecutionTime += (System.nanoTime() - start);
+		}
 		
-		output.append(computedTime);
-		output.append("]");
-	}
-	
-	private void processWithDetailedMode(IScenarioEntry entry, EnumTimeGranularity timeGranularity) {
-		ISort sortAlgo = entry.getSortAlgorithm();
-		IData data = entry.getData().clone();
-		String title = entry.getTitle();
+		averageExecutionTime = Utils.log2(Time.getComputedTime(averageExecutionTime / times, timeGranularity));
 		
-		output.append("--> ");
-		output.append(title);
-		output.append("\n");
-		
-		long start = System.nanoTime();
-		sortAlgo.process(data);
-		long computedTime = System.nanoTime() - start;
-		
-		chart.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()),
-				Utils.log2(computedTime));
 		output.append(data.toString());
 		output.append("\n");
-		output.append(computedTime);
+		output.append(averageExecutionTime);
 		output.append("\n");
+		
+		// updating the chart
+		chart.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()), averageExecutionTime);
+		output.append(averageExecutionTime);
+		output.append("]\n");
 	}
 	
 	private void clear() {
 		output.setLength(0);
-		chart = new Chart(applicationTitle, scenarioTitle, chartWidth, chartHeight);
+		chart = new SortVisualizer(applicationTitle, scenarioTitle, chartWidth, chartHeight, null, null);
 	}
 	
 	@Override
@@ -126,7 +178,7 @@ public class Scenario implements IScenario {
 	}
 
 	@Override
-	public Chart getChart() {
+	public SortVisualizer getChart() {
 		return chart;
 	}
 	

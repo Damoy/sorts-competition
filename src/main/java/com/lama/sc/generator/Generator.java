@@ -15,21 +15,30 @@ public class Generator implements IGenerator {
 		return INSTANCE;
 	}
 	
+	// TODO see subject
 	public IData randomGeneration(int size, int min, int max, EnumRandomGenerationBound bound) {
 		IData data = Data.of(size);
 		
 		switch(bound){
 			case LOGN:
-				max = (int) Utils.log2(max);
+				// max = (int) Utils.log2(max);
+				for(int i = 0; i < size; ++i)
+					data.set(i, (int) Utils.log2(Utils.irand(min, max)));
 				break;
 			case N2:
-				max = max * max;
+				// max = max * max;
+				
+				for(int i = 0; i < size; ++i) {
+					int v = Utils.irand(min, max);
+					data.set(i, v * v);
+				}
+				
 				break;
-			default:
+			case N:
+				for(int i = 0; i < size; ++i)
+					data.set(i, Utils.irand(min, max));
+				break;
 		}
-		
-		for(int i = 0; i < size; ++i)
-			data.set(i, Utils.irand(min, max));
 		
 		return data;
 	}

@@ -54,377 +54,169 @@
 		return data;	
 	} 
 	
-	
-	package com.lama.sc.execution;
-
-import com.lama.sc.utils.time.EnumTimeGranularity;
-
-public final class ScenarioConfig {
-	
-	private EnumTimeGranularity timeGranularity;
-	private EnumScenarioOutputMode outputMode;
-	private int sizeStart;
-	private int stepMul; 
-	private int highBound;
-	
-	private ScenarioConfig(EnumTimeGranularity timeGranularity, EnumScenarioOutputMode outputMode, int sizeStart,
-			int stepMul, int highBound) {
-		this.timeGranularity = timeGranularity;
-		this.outputMode = outputMode;
-		this.sizeStart = sizeStart;
-		this.stepMul = stepMul;
-		this.highBound = highBound;
-	}
-	
-	public static ScenarioConfig of(EnumTimeGranularity timeGranularity, EnumScenarioOutputMode outputMode, int sizeStart,
-			int stepMul, int highBound){
-		return new ScenarioConfig(timeGranularity, outputMode, sizeStart, stepMul, highBound);
-	}
-
-	public EnumTimeGranularity getTimeGranularity() {
-		return timeGranularity;
-	}
-
-	public void setTimeGranularity(EnumTimeGranularity timeGranularity) {
-		this.timeGranularity = timeGranularity;
-	}
-
-	public EnumScenarioOutputMode getOutputMode() {
-		return outputMode;
-	}
-
-	public void setOutputMode(EnumScenarioOutputMode outputMode) {
-		this.outputMode = outputMode;
-	}
-
-	public int getSizeStart() {
-		return sizeStart;
-	}
-
-	public void setSizeStart(int sizeStart) {
-		this.sizeStart = sizeStart;
-	}
-
-	public int getStepMul() {
-		return stepMul;
-	}
-
-	public void setStepMul(int stepMul) {
-		this.stepMul = stepMul;
-	}
-
-	public int getHighBound() {
-		return highBound;
-	}
-
-	public void setHighBound(int highBound) {
-		this.highBound = highBound;
-	}
-	
-
-}
-
-
-package com.lama.sc.utils;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.swing.JFrame;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-
-public class Chart extends JFrame {
-
-	private static final long serialVersionUID = 1L;
-	
-	private Map<String, XYSeries> data;
-	private String title;
-	
-	private int width;
-	private int height;
-	
-	public Chart(String applicationTitle, String chartTitle, int width, int height) {
-		super(applicationTitle);
-		this.title = chartTitle;
-		this.data = new HashMap<>();
-	}
-	
-	public Chart build(){
-		// based on the dataset we create the chart
-		JFreeChart pieChart = ChartFactory.createXYLineChart(title, "Data Size", "Time", getDataset(),
-				PlotOrientation.VERTICAL, true, true, false);
-		// Adding chart into a chart panel
-		ChartPanel chartPanel = new ChartPanel(pieChart);
-		// settind default size
-		chartPanel.setPreferredSize(new java.awt.Dimension(width, height));
-		// add to contentPane
-		setContentPane(chartPanel);
-		return this;
-	}
-	
-	public void createSerie(String title){
+	public static void main(String[] args){
+		randomScenario(10, -100, 100);
+		Utils.println("");
+		randomScenario(10, -100000, 100000);
+		Utils.println("");
 		
-	}
-	
-	private XYDataset getDataset(){
-		final XYSeriesCollection dataset = new XYSeriesCollection();
-		Iterator<Entry<String, XYSeries>> it = data.entrySet().iterator();
+		sortedScenario(10, -100, 100);
+		Utils.println("");
+		sortedScenario(10, -100000, 100000);
+		Utils.println("");
 		
-		while(it.hasNext()){
-			Entry<String, XYSeries> entry = it.next();
-			
-		}
-	}
-
-	private XYDataset createDataset() {
-		final XYSeries firefox = new XYSeries("Firefox");
-		firefox.add(1.0, 1.0);
-		firefox.add(2.0, 3.0);
-		firefox.add(3.0, 4.0);
-
-		final XYSeries chrome = new XYSeries("Chrome");
-		chrome.add(1.0, 4.0);
-		chrome.add(2.0, 6.0);
-		chrome.add(3.0, 5.0);
-
-		final XYSeries iexplorer = new XYSeries("InternetExplorer");
-		iexplorer.add(3.0, 4.0);
-		iexplorer.add(4.0, 5.0);
-		iexplorer.add(5.0, 4.0);
-
-		final XYSeriesCollection dataset = new XYSeriesCollection();
-		dataset.addSeries(firefox);
-		dataset.addSeries(chrome);
-		dataset.addSeries(iexplorer);
-
-		return dataset;
-	}
-
-}
-
-
-
-package com.lama.sc.utils;
-
-import java.util.HashMap;
-import java.util.Map;
-import javax.swing.JFrame;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-
-public class Chart extends JFrame implements IChart{
-
-	private static final long serialVersionUID = 463815431520813632L;
+		reversedScenario(10, -100, 100);
+		Utils.println("");
+		reversedScenario(10, -100000, 100000);
+		Utils.println("");
 	
-	private Map<String, XYSeries> data; 
-	private String title;
-	
-	private int width;
-	private int height;
-	
-	public Chart(String applicationTitle, String chartTitle, int width, int height) {
-		super(applicationTitle);
-		this.title = chartTitle;
-		this.data = new HashMap<>();
+		flatScenario(10, 1000);
+		Utils.println("");
+		flatScenario(10, 1000);
+		Utils.println("");
 	}
 	
-	@Override
-	public IChart build(){
-		// based on the dataset we create the chart
-		JFreeChart pieChart = ChartFactory.createXYLineChart(title, "Data Size", "Time", getDataset(),
-				PlotOrientation.VERTICAL, true, true, false);
-		// Adding chart into a chart panel
-		ChartPanel chartPanel = new ChartPanel(pieChart);
-		// settind default size
-		chartPanel.setPreferredSize(new java.awt.Dimension(width, height));
-		// add to contentPane
-		setContentPane(chartPanel);
-		return this;
-	}
-	
-	private XYDataset getDataset(){
-		XYSeriesCollection dataset = new XYSeriesCollection();
-		data.values().forEach(serie -> dataset.addSeries(serie));
-		return dataset;
-	}
-	
-	public IChart addEntry(String serieTitle, int dataSize, int time){
-		if(data.containsKey(serieTitle)){
-			data.get(serieTitle).add(dataSize, time);
-		} else {
-			XYSeries newSerie = new XYSeries(serieTitle);
-			newSerie.add(dataSize, time);
-			data.put(serieTitle, newSerie);
-		}
+	private static void randomScenario(int nb, int min, int max){
+		Utils.println(">> Start of random scenario with:");
+		Utils.println(">> Elements: " + nb + ", min value: " + min + ", max value: " + max + ".");
 		
-		return this;
+		IData dataset = Generator.getInstance().randomGeneration(nb, min, max);
+		processScenario(InsertionSort.getInstance(), dataset, EnumTimeGranularity.MICROSECONDS, "Insertion sort");
+		processScenario(MergeSort.getInstance(), dataset.clone(), EnumTimeGranularity.MICROSECONDS, "Merge sort");
+		processScenario(QuickSort.getInstance(), dataset.clone(), EnumTimeGranularity.MICROSECONDS, "Quick sort");
+		processScenario(HeapSort.getInstance(), dataset.clone(), EnumTimeGranularity.MICROSECONDS, "Heap sort");
+		processScenario(JavaSort.getInstance(), dataset.clone(), EnumTimeGranularity.MICROSECONDS, "Java sort");
+		
+		Utils.println(">> End of random scenario.");
 	}
 	
-}
-//		  Chart chart = new Chart("Browser Usage Statistics", "Which Browser are you using?");
-//	      chart.pack();
-//	      chart.setVisible(true);
+	private static void sortedScenario(int nb, int min, int max){
+		Utils.println(">> Start of sorted scenario with:");
+		Utils.println(">> Elements: " + nb + ", min value: " + min + ", max value: " + max + ".");
+		
+		IData dataset = Generator.getInstance().sortedGeneration(nb, min, max);
+		processScenario(InsertionSort.getInstance(), dataset, EnumTimeGranularity.MICROSECONDS, "Insertion sort");
+		processScenario(MergeSort.getInstance(), dataset.clone(), EnumTimeGranularity.MICROSECONDS, "Merge sort");
+		processScenario(QuickSort.getInstance(), dataset.clone(), EnumTimeGranularity.MICROSECONDS, "Quick sort");
+		processScenario(HeapSort.getInstance(), dataset.clone(), EnumTimeGranularity.MICROSECONDS, "Heap sort");
+		processScenario(JavaSort.getInstance(), dataset.clone(), EnumTimeGranularity.MICROSECONDS, "Java sort");
+		
+		Utils.println(">> End of sorted scenario.");
+	}
+	
+	private static void reversedScenario(int nb, int min, int max){
+		Utils.println(">> Start of reversed scenario with:");
+		Utils.println(">> Elements :" + nb + ", min value: " + min + ", max value: " + max + ".");
+		
+		IData dataset = Generator.getInstance().reversedGeneration(nb, min, max);
+		processScenario(InsertionSort.getInstance(), dataset, EnumTimeGranularity.MICROSECONDS, "Insertion sort");
+		processScenario(MergeSort.getInstance(), dataset.clone(), EnumTimeGranularity.MICROSECONDS, "Merge sort");
+		processScenario(QuickSort.getInstance(), dataset.clone(), EnumTimeGranularity.MICROSECONDS, "Quick sort");
+		processScenario(HeapSort.getInstance(), dataset.clone(), EnumTimeGranularity.MICROSECONDS, "Heap sort");
+		processScenario(JavaSort.getInstance(), dataset.clone(), EnumTimeGranularity.MICROSECONDS, "Java sort");
+		
+		Utils.println(">> End of reversed scenario.");
+	}
+	
+	private static void flatScenario(int nb, int value){
+		Utils.println(">> Start of flat scenario with:");
+		Utils.println(">> Elements :" + nb + ", value: " + value + ".");
+		
+		IData dataset = Generator.getInstance().flatGeneration(nb, value);
+		processScenario(InsertionSort.getInstance(), dataset, EnumTimeGranularity.MICROSECONDS, "Insertion sort");
+		processScenario(MergeSort.getInstance(), dataset.clone(), EnumTimeGranularity.MICROSECONDS, "Merge sort");
+		processScenario(QuickSort.getInstance(), dataset.clone(), EnumTimeGranularity.MICROSECONDS, "Quick sort");
+		processScenario(HeapSort.getInstance(), dataset.clone(), EnumTimeGranularity.MICROSECONDS, "Heap sort");
+		processScenario(JavaSort.getInstance(), dataset.clone(), EnumTimeGranularity.MICROSECONDS, "Java sort");
+		
+		Utils.println(">> End of flat scenario.");
+	}
+	
+	private static void processScenario(ISort algo, IData dataset, EnumTimeGranularity granularity, String title){
+		Time.start();
+		algo.process(dataset);
+		Time.end();
+		Time.display(title, granularity);
+		dataset.display();
+	}
 
+	/////////
+
+
+		@Override
+	public void execute(EnumTimeGranularity timeGranularity) {
+		output.append("---------");
+		output.append(title);
+		output.append("\n");
+		datas.forEach(data -> process(data));
+		output.append("---------");
+	}
 	
+	private void process(IData data) {
+		Time.start();
+		algo.process(dataset);
+		Time.end();
+		Time.display(title, granularity);
+		dataset.display();
+	}
 	
-	
-	
-	
+
+
+					// executionResults.put(entry, executionResults.get(entry) + (System.nanoTime() - start));
+
+
+
+						private void processWithDetailedMode(IScenarioEntry entry, EnumTimeGranularity timeGranularity) {
+		ISort sortAlgo = entry.getSortAlgorithm();
+		IData data = entry.getData().clone();
+		String title = entry.getTitle();
+		
+		output.append("--> ");
+		output.append(title);
+		output.append("\n");
+		
+		long start = System.nanoTime();
+		sortAlgo.process(data);
+		long computedTime = System.nanoTime() - start;
+		
+		chart.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()),
+				Utils.log2(computedTime));
+		output.append(data.toString());
+		output.append("\n");
+		output.append(computedTime);
+		output.append("\n");
+	}
+
 	//
-	
-	
-	
-	package com.lama.sc.utils.rendering;
 
-import java.util.HashMap;
-import java.util.Map;
-import javax.swing.JFrame;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-
-public class Chart extends JFrame implements IChart{
-
-	private static final long serialVersionUID = 463815431520813632L;
-	
-	private Map<String, XYSeries> data; 
-	private String title;
-	
-	private int width;
-	private int height;
-	
-	public Chart(String applicationTitle, String chartTitle, int width, int height) {
-		super(applicationTitle);
-		this.title = chartTitle;
-		this.data = new HashMap<>();
+		private void executeWithTimeOnlyMode(EnumTimeGranularity timeGranularity, int times){
+		output.append("Time granularity: ");
+		output.append(EnumTimeGranularity.getString(timeGranularity));
+		output.append("\n\n[");
 		
-		JFreeChart pieChart = ChartFactory.createXYLineChart(title, applicationTitle, chartTitle, getDataset(),
-				PlotOrientation.VERTICAL, true, true, false);
-		// Adding chart into a chart panel
-		ChartPanel chartPanel = new ChartPanel(pieChart);
-		// settind default size
-		chartPanel.setPreferredSize(new java.awt.Dimension(width, height));
-		// add to contentPane
-		setContentPane(chartPanel);
-	}
-	
-	@Override
-	public IChart build(){
-		// based on the dataset we create the chart
-		JFreeChart pieChart = ChartFactory.createXYLineChart(title, "Data Size", "Time", getDataset(),
-				PlotOrientation.VERTICAL, true, true, false);
-		// Adding chart into a chart panel
-		ChartPanel chartPanel = new ChartPanel(pieChart);
-		// settind default size
-		chartPanel.setPreferredSize(new java.awt.Dimension(width, height));
-		// add to contentPane
-		setContentPane(chartPanel);
-		return this;
-	}
-	
-	@Override
-	public void launch(){
-		pack();
-		requestFocus();
-		setVisible(true);
-	}
-	
-	private XYDataset getDataset(){
-		XYSeriesCollection dataset = new XYSeriesCollection();
-		data.values().forEach(serie -> dataset.addSeries(serie));
-		return dataset;
-	}
-	
-	public IChart addEntry(String serieTitle, int dataSize, int time){
-		if(data.containsKey(serieTitle)){
-			data.get(serieTitle).add(dataSize, time);
-		} else {
-			XYSeries newSerie = new XYSeries(serieTitle);
-			newSerie.add(dataSize, time);
-			data.put(serieTitle, newSerie);
+		for(int i = 0; i < entries.size() - 1; ++i){
+			IScenarioEntry entry = entries.get(i);
+			ISort sortAlgo = entry.getSortAlgorithm();
+			IData data = entry.getData().clone();
+			
+			long start = System.nanoTime();
+			sortAlgo.process(data);
+			long computedTime = System.nanoTime() - start;
+			
+			// here constructs step by step the chart
+			chart.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()), Utils.log2(computedTime));
+			output.append(computedTime);
+			output.append(",");
 		}
 		
-		return this;
-	}
-	
-	
-	// 
-	
-	package com.lama.sc.utils.rendering;
-
-import java.util.HashMap;
-import java.util.Map;
-import javax.swing.JFrame;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-
-public class Chart extends JFrame implements IChart {
-
-	private static final long serialVersionUID = 1L;
-	
-	private Map<String, XYSeries> data; 
-	private String title;
-	
-	private int width;
-	private int height;
-	
-	private Chart(String applicationTitle, String chartTitle, int width, int height, XYSeriesCollection collection) {
-		super(applicationTitle);
-		this.title = chartTitle;
-		this.data = new HashMap<>();
-		this.width = width;
-		this.height = height;
+		IScenarioEntry entry = entries.get(entries.size() - 1);
+		ISort sortAlgo = entry.getSortAlgorithm();
+		IData data = entry.getData().clone();
 		
-		JFreeChart pieChart = ChartFactory.createXYLineChart(title, applicationTitle, chartTitle, collection,
-				PlotOrientation.VERTICAL, true, true, false);
-		// Adding chart into a chart panel
-		ChartPanel chartPanel = new ChartPanel(pieChart);
-		// settind default size
-		chartPanel.setPreferredSize(new java.awt.Dimension(width, height));
-		// add to contentPane
-		this.setContentPane(chartPanel);
-	}
-	
-	@Override
-	public IChart launch(){
-		this.pack();
-		this.requestFocus();
-		this.setVisible(true);
-		return this;
-	}
-	
-	public static IChart from(ChartConfig config){
+		long start = System.nanoTime();
+		sortAlgo.process(data);
+		long computedTime = System.nanoTime() - start;
 		
+		output.append(computedTime);
+		output.append("]");
 	}
-	
-}
-	
-	
-}
-	

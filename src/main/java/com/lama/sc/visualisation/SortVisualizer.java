@@ -1,4 +1,4 @@
-	package com.lama.sc.rendering;
+package com.lama.sc.visualisation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +12,7 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-public class Chart extends JFrame implements IChart{
+public class SortVisualizer extends JFrame implements ISortVisualiser{
 
 	private static final long serialVersionUID = 463815431520813632L;
 	
@@ -22,18 +22,24 @@ public class Chart extends JFrame implements IChart{
 	private int width;
 	private int height;
 	
-	public Chart(String applicationTitle, String chartTitle, int width, int height) {
+	private String xAxisTitle;
+	private String yAxisTitle;
+	
+	public SortVisualizer(String applicationTitle, String chartTitle, int width, int height,
+			String xAxisTitle, String yAxisTitle) {
 		super(applicationTitle);
 		this.title = chartTitle;
 		this.data = new HashMap<>();
 		this.width = width;
 		this.height = height;
+		this.xAxisTitle = xAxisTitle;
+		this.yAxisTitle = yAxisTitle;
 	}
 	
 	@Override
-	public IChart build(){
+	public ISortVisualiser build(){
 		// based on the dataset we create the chart
-		JFreeChart pieChart = ChartFactory.createXYLineChart(title, "Data Size", "Time", getDataset(),
+		JFreeChart pieChart = ChartFactory.createXYLineChart(title, xAxisTitle, yAxisTitle, getDataset(),
 				PlotOrientation.VERTICAL, true, true, false);
 		// Adding chart into a chart panel
 		ChartPanel chartPanel = new ChartPanel(pieChart);
@@ -58,7 +64,7 @@ public class Chart extends JFrame implements IChart{
 		return dataset;
 	}
 	
-	public IChart addEntry(String serieTitle, long dataSize, long time){
+	public ISortVisualiser addEntry(String serieTitle, long dataSize, long time){
 		if(data.containsKey(serieTitle)){
 			data.get(serieTitle).add(dataSize, time);
 		} else {
@@ -69,4 +75,14 @@ public class Chart extends JFrame implements IChart{
 		
 		return this;
 	}
+
+	public void setXAxisTitle(String xAxisTitle) {
+		this.xAxisTitle = xAxisTitle;
+	}
+
+	public void setYAxisTitle(String yAxisTitle) {
+		this.yAxisTitle = yAxisTitle;
+	}
+	
+	
 }

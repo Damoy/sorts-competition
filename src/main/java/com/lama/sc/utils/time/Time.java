@@ -8,14 +8,17 @@ public final class Time {
 	
 	private Time(){}
 	
+	@Deprecated
 	public static void start(){
 		start = System.nanoTime();
 	}
 	
+	@Deprecated
 	public static void stop(){
 		end = System.nanoTime() - start;
 	}
 	
+	@Deprecated
 	public static String output(EnumTimeGranularity granularity){
 		SBUILDER.append("Time: ");
 		
@@ -43,24 +46,19 @@ public final class Time {
 		return sbuilderContent;
 	}
 	
-	public static long getComputedTime(EnumTimeGranularity timeGranularity){
-		long computedTime = end;
-		
+	public static long getComputedTime(long time, EnumTimeGranularity timeGranularity){
 		switch(timeGranularity){
 			case MICROSECONDS:
-				computedTime = end / 1000;
-				break;
+				return time / 1000;
 			case MILLISECONDS:
-				computedTime = end / 1000000;
-				break;
+				return time / 1000000;
 			case SECONDS:
-				computedTime = end / 1000000000;
-				break;
+				return time / 1000000000;
 			case NANOSECONDS:
 			default:
 		}
 		
-		return computedTime;
+		return time;
 	}
 	
 	private static void resetStringBuilder(){

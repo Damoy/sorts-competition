@@ -6,14 +6,16 @@ public final class ScenarioConfig {
 	
 	private EnumTimeGranularity timeGranularity;
 	private EnumScenarioOutputMode outputMode;
+	private int times;
 	
-	private ScenarioConfig(EnumTimeGranularity timeGranularity, EnumScenarioOutputMode outputMode){
+	private ScenarioConfig(EnumTimeGranularity timeGranularity, EnumScenarioOutputMode outputMode, int times){
 		this.timeGranularity = timeGranularity;
 		this.outputMode = outputMode;
+		this.times = times;
 	}
 	
-	public static ScenarioConfig of(EnumTimeGranularity timeGranularity, EnumScenarioOutputMode outputMode){
-		return new ScenarioConfig(timeGranularity, outputMode);
+	public static ScenarioConfig of(EnumTimeGranularity timeGranularity, EnumScenarioOutputMode outputMode, int times){
+		return new ScenarioConfig(timeGranularity, outputMode, times);
 	}
 
 	public EnumTimeGranularity getTimeGranularity() {
@@ -30,6 +32,14 @@ public final class ScenarioConfig {
 
 	public void setOutputMode(EnumScenarioOutputMode outputMode) {
 		this.outputMode = outputMode;
+	}
+
+	public int getTimes() {
+		return times;
+	}
+
+	public void setTimes(int times) {
+		this.times = times;
 	}
 
 }

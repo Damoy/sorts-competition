@@ -7,6 +7,6 @@ public interface IScenario {
 	public void execute(ScenarioConfig config);
 	public void output();
 	public void display();
-	public SortVisualizer getChart();
+	public SortVisualizer getVisualizer();
 	
 }

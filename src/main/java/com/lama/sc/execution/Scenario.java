@@ -47,7 +47,8 @@ public class Scenario implements IScenario {
 		EnumTimeGranularity timeGranularity = config.getTimeGranularity();
 		int times = config.getTimes();
 		
-		visualiser.setYAxisTitle("Data size (" + EnumTimeGranularity.getString(timeGranularity) + ")");
+		visualiser.setXAxisTitle(config.getVisualiserXLabel());
+		visualiser.setYAxisTitle(config.getVisualiserYLabel());
 		
 		output.append(">> Starting scenario \"");
 		output.append(scenarioTitle);
@@ -92,6 +93,9 @@ public class Scenario implements IScenario {
 	}
 	
 	private void executeWithTimeOnlyMode(ScenarioConfig config) {
+		visualiser.setXAxisTitle(config.getVisualiserXLabel());
+		visualiser.setYAxisTitle(config.getVisualiserYLabel());
+		
 		EnumTimeGranularity timeGranularity = config.getTimeGranularity();
 		int times = config.getTimes();
 		
@@ -178,7 +182,7 @@ public class Scenario implements IScenario {
 	}
 
 	@Override
-	public SortVisualizer getChart() {
+	public SortVisualizer getVisualizer() {
 		return visualiser;
 	}
 	

@@ -220,3 +220,13 @@
 		output.append(computedTime);
 		output.append("]");
 	}
+
+
+			// launchRandomWithAll(100, EnumRandomGenerationBound.N).getChart().build().launch();
+		// launchRandomWithAll(100, EnumRandomGenerationBound.N).getChart().build().launch();
+		// launchFlatWithAll(100).getChart().build().launch();
+
+
+		bestOptimumSortRandom(100, EnumRandomGenerationBound.N);
+
+		1. bestOptimumSortRandom-100-N

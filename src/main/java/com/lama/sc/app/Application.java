@@ -6,10 +6,14 @@ import com.lama.sc.core.InsertionSort;
 import com.lama.sc.core.MergeSort;
 import com.lama.sc.core.FastMergeSort;
 import com.lama.sc.core.QuickSort;
+import com.lama.sc.core.QuickSort3;
+import com.lama.sc.core.QuickSort5;
+import com.lama.sc.core.QuickSortRandom;
 import com.lama.sc.core.SmoothSort;
 import com.lama.sc.execution.EnumScenarioOutputMode;
 import com.lama.sc.execution.IScenario;
 import com.lama.sc.execution.IScenarioBuilder;
+import com.lama.sc.execution.Scenario;
 import com.lama.sc.execution.ScenarioBuilder;
 import com.lama.sc.execution.ScenarioConfig;
 import com.lama.sc.generator.EnumRandomGenerationBound;
@@ -21,10 +25,65 @@ import com.lama.sc.utils.time.EnumTimeGranularity;
 public class Application {
 
 	public static void main(String[] args) {
+		// quicks(10, EnumRandomGenerationBound.N);
 		// optimumVsNonOptimumSortFlat(100);
 		// optimumVsNonOptimumSortReversed(100);
 		// optimumVsNonOptimumSortSorted(100);
 		// optimumVsNonOptimumSortRandom(100);
+		
+		IData d1 = Generator.getInstance().randomGeneration(6, -1000000, 1000000, EnumRandomGenerationBound.N);
+		ScenarioBuilder.getInstance().addEntry("T", QuickSortRandom.getInstance(), d1);
+		IScenario scenario = ScenarioBuilder.getInstance().build("test", "d5", 900, 500);
+		scenario.execute(ScenarioConfig.of(EnumTimeGranularity.MICROSECONDS,
+				EnumScenarioOutputMode.DETAILED, 100, null, null));
+		scenario.display();
+	}
+	
+	private static void quicks(int times, EnumRandomGenerationBound bound) {
+		IGenerator generator = Generator.getInstance();
+		String scenarioTitle = "Comparing Quick Sorts Pivots"; // (" + bound + ")";
+
+		int size = 2 ^ 8;
+		int min = -1000000;
+		int max = 1000000;
+
+		IData dataset2pow8 = generator.randomGeneration(size, min, max, bound);
+		IData dataset2pow9 = generator.randomGeneration(size << 1, min, max, bound);
+		IData dataset2pow10 = generator.randomGeneration(size << 2, min, max, bound);
+		IData dataset2pow11 = generator.randomGeneration(size << 3, min, max, bound);
+		IData dataset2pow12 = generator.randomGeneration(size << 4, min, max, bound);
+		IData dataset2pow13 = generator.randomGeneration(size << 5, min, max, bound);
+		IData dataset2pow14 = generator.randomGeneration(size << 6, min, max, bound);
+		IData dataset2pow15 = generator.randomGeneration(size << 7, min, max, bound);
+		IData dataset2pow16 = generator.randomGeneration(size << 8, min, max, bound);
+		IData dataset2pow17 = generator.randomGeneration(size << 9, min, max, bound);
+		IData dataset2pow18 = generator.randomGeneration(size << 10, min, max, bound);
+		IData dataset2pow19 = generator.randomGeneration(size << 11, min, max, bound);
+
+		IScenarioBuilder scenarioBuilder = ScenarioBuilder.getInstance();
+
+		input(scenarioBuilder, "Quick Sort", QuickSort.getInstance(), dataset2pow8, dataset2pow9, dataset2pow10,
+				dataset2pow11, dataset2pow12, dataset2pow13, dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17,
+				dataset2pow18, dataset2pow19);
+
+		input(scenarioBuilder, "Quick Sort 3", QuickSort3.getInstance(), dataset2pow8, dataset2pow9, dataset2pow10,
+				dataset2pow11, dataset2pow12, dataset2pow13, dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17,
+				dataset2pow18, dataset2pow19);
+		
+		input(scenarioBuilder, "Quick Sort 5", QuickSort5.getInstance(), dataset2pow8, dataset2pow9, dataset2pow10,
+				dataset2pow11, dataset2pow12, dataset2pow13, dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17,
+				dataset2pow18, dataset2pow19);
+		
+		input(scenarioBuilder, "Quick Sort random", QuickSortRandom.getInstance(), dataset2pow8, dataset2pow9, dataset2pow10,
+				dataset2pow11, dataset2pow12, dataset2pow13, dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17,
+				dataset2pow18, dataset2pow19);
+		
+		IScenario scenario1 = scenarioBuilder.build("Sorts competition", scenarioTitle, 900, 500);
+
+		scenario1.execute(ScenarioConfig.of(EnumTimeGranularity.MICROSECONDS, EnumScenarioOutputMode.TIME_ONLY, times,
+				"Data Size", "Time log2(mics)"));
+		scenario1.output();
+		scenario1.getVisualizer().build().launch();
 	}
 	
 	private static void optimumVsNonOptimumSortFlat(int times){

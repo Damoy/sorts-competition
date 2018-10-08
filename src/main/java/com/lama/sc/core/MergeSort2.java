@@ -24,42 +24,33 @@ public class MergeSort2 implements ISort {
 			execute(data, buffer, left, mid); 
 			execute(data, buffer, mid + 1, right); 
 			merge(data, buffer, left, mid, right);
-			
-//			execute(data, left, mid); 
-//			execute(data, mid + 1, right); 
-//			merge(data, left, mid, right);
 		}
 		
 		return data;
 	}
 	
-	// TODO only one buffer
 	void merge(IData data, IData buffer, int left, int mid, int right) {
 		// Find sizes of two sub-arrays to be merged
 		int n1 = mid - left + 1;
 		int n2 = right - mid;
 
-		// Create temporary data
-		// IData dl = Data.of(n1);
-		// IData dr = Data.of(n2);
-
 		// Copy data to temporary ones
 		for (int i = 0; i < n1; ++i)
 			buffer.set(i, data.get(left + i));
-		for (int j = n1; j < n2; ++j)
-			buffer.set(j, data.get(mid + 1 + j));
+		for (int j = 0; j < n2; ++j)
+			buffer.set(j + n1, data.get(mid + 1 + j));
 
 		// Merge the temporary data
 		int i = 0;
-		int j = n1;
+		int j = 0;
 		int k = left;
 		
 		while (i < n1 && j < n2) {
-			if(buffer.get(i) <= buffer.get(j)){
+			if(buffer.get(i) <= buffer.get(j + n1)){
 				data.set(k, buffer.get(i));
 				++i;
 			} else {
-				data.set(k, buffer.get(j));
+				data.set(k, buffer.get(j + n1));
 				++j;
 			}
 			
@@ -74,15 +65,19 @@ public class MergeSort2 implements ISort {
 		}
 
 		while (j < n2) {
-			data.set(k, buffer.get(j));
+			data.set(k, buffer.get(j + n1));
 			++j;
 			++k;
 		}
+		
+		IData saved = data;
+		data = buffer;
+		buffer = saved;
 	}
 
 	@Override
 	public String getTitle() {
-		return "Merge";
+		return "Fast Merge";
 	}
 	
 }

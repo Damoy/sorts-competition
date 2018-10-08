@@ -3,9 +3,8 @@ package com.lama.sc.app;
 import com.lama.sc.core.HeapSort;
 import com.lama.sc.core.ISort;
 import com.lama.sc.core.InsertionSort;
-import com.lama.sc.core.JavaSort;
 import com.lama.sc.core.MergeSort;
-import com.lama.sc.core.MergeSort2;
+import com.lama.sc.core.FastMergeSort;
 import com.lama.sc.core.QuickSort;
 import com.lama.sc.core.SmoothSort;
 import com.lama.sc.execution.EnumScenarioOutputMode;
@@ -22,9 +21,244 @@ import com.lama.sc.utils.time.EnumTimeGranularity;
 public class Application {
 
 	public static void main(String[] args) {
-		// bestOptimumSortRandom(100, EnumRandomGenerationBound.N);
-		// bestOptimumSortFlat(100);
-		compareMerges(100, EnumRandomGenerationBound.N);
+		// optimumVsNonOptimumSortFlat(100);
+		// optimumVsNonOptimumSortReversed(100);
+		// optimumVsNonOptimumSortSorted(100);
+		// optimumVsNonOptimumSortRandom(100);
+	}
+	
+	private static void optimumVsNonOptimumSortFlat(int times){
+		IGenerator generator = Generator.getInstance();
+		String scenarioTitle = "Comparing Optimum and Non-optimum Sorts - flat"; // (" + bound + ")";
+		
+		int size = 2 ^ 8;
+		int v = 42;
+		
+		IData dataset2pow8 = generator.flatGeneration(size, v);
+		IData dataset2pow9 = generator.flatGeneration(size << 1, v);
+		IData dataset2pow10 = generator.flatGeneration(size << 2, v);
+		IData dataset2pow11 = generator.flatGeneration(size << 3, v);
+		IData dataset2pow12 = generator.flatGeneration(size << 4, v);
+		IData dataset2pow13 = generator.flatGeneration(size << 5, v);
+		IData dataset2pow14 = generator.flatGeneration(size << 6, v);
+		IData dataset2pow15 = generator.flatGeneration(size << 7, v);
+		IData dataset2pow16 = generator.flatGeneration(size << 8, v);
+		IData dataset2pow17 = generator.flatGeneration(size << 9, v);
+		IData dataset2pow18 = generator.flatGeneration(size << 10, v);
+		IData dataset2pow19 = generator.flatGeneration(size << 11, v);
+		IData dataset2pow20 = generator.flatGeneration(size << 12, v);
+		IData dataset2pow21 = generator.flatGeneration(size << 13, v);
+		IData dataset2pow22 = generator.flatGeneration(size << 14, v);
+		IData dataset2pow23 = generator.flatGeneration(size << 15, v);
+		
+		IScenarioBuilder scenarioBuilder = ScenarioBuilder.getInstance();
+
+		input(scenarioBuilder, "Merge Sort", FastMergeSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
+				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
+		
+		input(scenarioBuilder, "Heap Sort", HeapSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
+				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
+		
+		input(scenarioBuilder, "Smooth Sort", SmoothSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
+				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
+		
+		input(scenarioBuilder, "Insertion Sort", InsertionSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
+				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
+		
+		input(scenarioBuilder, "Quick Sort", QuickSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18);
+		
+		IScenario scenario1 = scenarioBuilder.build("Sorts competition", scenarioTitle, 900, 500);
+		
+		scenario1.execute(ScenarioConfig.of(EnumTimeGranularity.MICROSECONDS,
+				EnumScenarioOutputMode.TIME_ONLY, times, "Data Size", "Time log2(mics)"));
+		scenario1.output();
+	}
+	
+	private static void optimumVsNonOptimumSortReversed(int times){
+		IGenerator generator = Generator.getInstance();
+		String scenarioTitle = "Comparing Optimum and Non-optimum Sorts - reversed"; // (" + bound + ")";
+		
+		int size = 2 ^ 8;
+		int min = -1000000;
+		int max = 1000000;
+		
+		IData dataset2pow8 = generator.reversedGeneration(size, min, max);
+		IData dataset2pow9 = generator.reversedGeneration(size << 1, min, max);
+		IData dataset2pow10 = generator.reversedGeneration(size << 2, min, max);
+		IData dataset2pow11 = generator.reversedGeneration(size << 3, min, max);
+		IData dataset2pow12 = generator.reversedGeneration(size << 4, min, max);
+		IData dataset2pow13 = generator.reversedGeneration(size << 5, min, max);
+		IData dataset2pow14 = generator.reversedGeneration(size << 6, min, max);
+		IData dataset2pow15 = generator.reversedGeneration(size << 7, min, max);
+		IData dataset2pow16 = generator.reversedGeneration(size << 8, min, max);
+		IData dataset2pow17 = generator.reversedGeneration(size << 9, min, max);
+		IData dataset2pow18 = generator.reversedGeneration(size << 10, min, max);
+		IData dataset2pow19 = generator.reversedGeneration(size << 11, min, max);
+		IData dataset2pow20 = generator.reversedGeneration(size << 12, min, max);
+		IData dataset2pow21 = generator.reversedGeneration(size << 13, min, max);
+		IData dataset2pow22 = generator.reversedGeneration(size << 14, min, max);
+		IData dataset2pow23 = generator.reversedGeneration(size << 15, min, max);
+		
+		IScenarioBuilder scenarioBuilder = ScenarioBuilder.getInstance();
+
+		input(scenarioBuilder, "Merge Sort", FastMergeSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
+				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
+		
+		input(scenarioBuilder, "Heap Sort", HeapSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
+				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
+		
+		input(scenarioBuilder, "Smooth Sort", SmoothSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
+				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
+		
+		input(scenarioBuilder, "Insertion Sort", InsertionSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
+				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
+		
+		input(scenarioBuilder, "Quick Sort", QuickSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18);
+		
+		IScenario scenario1 = scenarioBuilder.build("Sorts competition", scenarioTitle, 900, 500);
+		
+		scenario1.execute(ScenarioConfig.of(EnumTimeGranularity.MICROSECONDS,
+				EnumScenarioOutputMode.TIME_ONLY, times, "Data Size", "Time log2(mics)"));
+		scenario1.output();
+	}
+	
+	private static void optimumVsNonOptimumSortSorted(int times){
+		IGenerator generator = Generator.getInstance();
+		String scenarioTitle = "Comparing Optimum and Non-optimum Sorts - sorted"; // (" + bound + ")";
+		
+		int size = 2 ^ 8;
+		int min = -1000000;
+		int max = 1000000;
+		
+		IData dataset2pow8 = generator.sortedGeneration(size, min, max);
+		IData dataset2pow9 = generator.sortedGeneration(size << 1, min, max);
+		IData dataset2pow10 = generator.sortedGeneration(size << 2, min, max);
+		IData dataset2pow11 = generator.sortedGeneration(size << 3, min, max);
+		IData dataset2pow12 = generator.sortedGeneration(size << 4, min, max);
+		IData dataset2pow13 = generator.sortedGeneration(size << 5, min, max);
+		IData dataset2pow14 = generator.sortedGeneration(size << 6, min, max);
+		IData dataset2pow15 = generator.sortedGeneration(size << 7, min, max);
+		IData dataset2pow16 = generator.sortedGeneration(size << 8, min, max);
+		IData dataset2pow17 = generator.sortedGeneration(size << 9, min, max);
+		IData dataset2pow18 = generator.sortedGeneration(size << 10, min, max);
+		IData dataset2pow19 = generator.sortedGeneration(size << 11, min, max);
+		IData dataset2pow20 = generator.sortedGeneration(size << 12, min, max);
+		IData dataset2pow21 = generator.sortedGeneration(size << 13, min, max);
+		IData dataset2pow22 = generator.sortedGeneration(size << 14, min, max);
+		IData dataset2pow23 = generator.sortedGeneration(size << 15, min, max);
+		
+		IScenarioBuilder scenarioBuilder = ScenarioBuilder.getInstance();
+
+		input(scenarioBuilder, "Merge Sort", FastMergeSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
+				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
+		
+		input(scenarioBuilder, "Heap Sort", HeapSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
+				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
+		
+		input(scenarioBuilder, "Smooth Sort", SmoothSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
+				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
+		
+		input(scenarioBuilder, "Insertion Sort", InsertionSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
+				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
+		
+		input(scenarioBuilder, "Quick Sort", QuickSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18);
+		
+		IScenario scenario1 = scenarioBuilder.build("Sorts competition", scenarioTitle, 900, 500);
+		
+		scenario1.execute(ScenarioConfig.of(EnumTimeGranularity.MICROSECONDS,
+				EnumScenarioOutputMode.TIME_ONLY, times, "Data Size", "Time log2(mics)"));
+		scenario1.output();
+	}
+	
+	private static void optimumVsNonOptimumSortRandom(int times, EnumRandomGenerationBound bound){
+		IGenerator generator = Generator.getInstance();
+		String scenarioTitle = "Comparing Optimum and Non-optimum Sorts"; // (" + bound + ")";
+		
+		int size = 2 ^ 8;
+		int min = -1000000;
+		int max = 1000000;
+		
+		IData dataset2pow8 = generator.randomGeneration(size, min, max, bound);
+		IData dataset2pow9 = generator.randomGeneration(size << 1, min, max, bound);
+		IData dataset2pow10 = generator.randomGeneration(size << 2, min, max, bound);
+		IData dataset2pow11 = generator.randomGeneration(size << 3, min, max, bound);
+		IData dataset2pow12 = generator.randomGeneration(size << 4, min, max, bound);
+		IData dataset2pow13 = generator.randomGeneration(size << 5, min, max, bound);
+		IData dataset2pow14 = generator.randomGeneration(size << 6, min, max, bound);
+		IData dataset2pow15 = generator.randomGeneration(size << 7, min, max, bound);
+		IData dataset2pow16 = generator.randomGeneration(size << 8, min, max, bound);
+		IData dataset2pow17 = generator.randomGeneration(size << 9, min, max, bound);
+		IData dataset2pow18 = generator.randomGeneration(size << 10, min, max, bound);
+		IData dataset2pow19 = generator.randomGeneration(size << 11, min, max, bound);
+		IData dataset2pow20 = generator.randomGeneration(size << 12, min, max, bound);
+		IData dataset2pow21 = generator.randomGeneration(size << 13, min, max, bound);
+		IData dataset2pow22 = generator.randomGeneration(size << 14, min, max, bound);
+		IData dataset2pow23 = generator.randomGeneration(size << 15, min, max, bound);
+		
+		IScenarioBuilder scenarioBuilder = ScenarioBuilder.getInstance();
+
+		input(scenarioBuilder, "Merge Sort", FastMergeSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
+				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
+		
+		input(scenarioBuilder, "Heap Sort", HeapSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
+				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
+		
+		input(scenarioBuilder, "Smooth Sort", SmoothSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
+				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
+		
+		input(scenarioBuilder, "Insertion Sort", InsertionSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
+				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
+		
+		input(scenarioBuilder, "Quick Sort", QuickSort.getInstance(), dataset2pow8,
+				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
+				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
+				dataset2pow19);
+		
+		IScenario scenario1 = scenarioBuilder.build("Sorts competition", scenarioTitle, 900, 500);
+		
+		scenario1.execute(ScenarioConfig.of(EnumTimeGranularity.MICROSECONDS,
+				EnumScenarioOutputMode.TIME_ONLY, times, "Data Size", "Time log2(mics)"));
+		// scenario1.display();
+		scenario1.output();
+		//scenario1.getVisualizer().build().launch();
 	}
 	
 	private static void compareMerges(int times, EnumRandomGenerationBound bound){
@@ -59,7 +293,7 @@ public class Application {
 				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
 				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
 		
-		input(scenarioBuilder, "Fast merge sort", MergeSort2.getInstance(), dataset2pow8,
+		input(scenarioBuilder, "Fast merge sort", FastMergeSort.getInstance(), dataset2pow8,
 				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
 				dataset2pow14, dataset2pow15, dataset2pow16, dataset2pow17, dataset2pow18,
 				dataset2pow19, dataset2pow20, dataset2pow21, dataset2pow22, dataset2pow23);
@@ -71,28 +305,6 @@ public class Application {
 		scenario1.output();
 		scenario1.getVisualizer().build().launch();
 	}
-	
-//	private static void testMerge2() {
-//		IGenerator generator = Generator.getInstance();
-//		String scenarioTitle = "Merge2";
-//		
-//		IData datasetpow10 = generator.randomGeneration(2^10, -50, 50, EnumRandomGenerationBound.N);
-//		IData datasetpow11 = generator.randomGeneration(2^11, -50, 50, EnumRandomGenerationBound.N);
-//		IData datasetpow12 = generator.randomGeneration(2^12, -50, 50, EnumRandomGenerationBound.N);
-//		
-//		IScenarioBuilder builder = ScenarioBuilder.getInstance();
-//		builder.addEntry(scenarioTitle, MergeSort.getInstance(), datasetpow10);
-//		builder.addEntry(scenarioTitle, MergeSort.getInstance(), datasetpow11);
-//		builder.addEntry(scenarioTitle, MergeSort.getInstance(), datasetpow12);
-//		builder.addEntry(scenarioTitle, MergeSort2.getInstance(), datasetpow10);
-//		builder.addEntry(scenarioTitle, MergeSort2.getInstance(), datasetpow11);
-//		builder.addEntry(scenarioTitle, MergeSort2.getInstance(), datasetpow12);
-//		
-//		IScenario scenario = builder.build("Sort comparison", scenarioTitle, 900, 650);
-//		scenario.execute(ScenarioConfig.of(EnumTimeGranularity.MICROSECONDS, EnumScenarioOutputMode.DETAILED, 100, "Data size", "Time"));
-//		scenario.getVisualizer().build().launch();
-//		scenario.display();
-//	}
 	
 	private static void bestOptimumSortRandom(int times, EnumRandomGenerationBound bound){
 		IGenerator generator = Generator.getInstance();
@@ -203,121 +415,9 @@ public class Application {
 		scenario1.getVisualizer().build().launch();
 	}
 	
-	private static IScenario launchRandomWithAll(int times, EnumRandomGenerationBound bound){
-		IGenerator generator = Generator.getInstance();
-		String scenarioTitle = "Random Generation (" + bound + ")";
-		
-		int size = 2 ^ 8;
-		int min = -1000000;
-		int max = 1000000;
-		
-		IData dataset2pow8 = generator.randomGeneration(size, min, max, bound);
-		IData dataset2pow9 = generator.randomGeneration(size << 1, min, max, bound);
-		IData dataset2pow10 = generator.randomGeneration(size << 2, min, max, bound);
-		IData dataset2pow11 = generator.randomGeneration(size << 3, min, max, bound);
-		IData dataset2pow12 = generator.randomGeneration(size << 4, min, max, bound);
-		IData dataset2pow13 = generator.randomGeneration(size << 5, min, max, bound);
-		IData dataset2pow14 = generator.randomGeneration(size << 6, min, max, bound);
-		IData dataset2pow15 = generator.randomGeneration(size << 7, min, max, bound);
-		IData dataset2pow16 = generator.randomGeneration(size << 8, min, max, bound);
-		
-		IScenarioBuilder scenarioBuilder = ScenarioBuilder.getInstance();
-
-		input(scenarioBuilder, "Insertion Sort", InsertionSort.getInstance(), dataset2pow8,
-				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
-				dataset2pow14, dataset2pow15, dataset2pow16);
-		input(scenarioBuilder, "Merge Sort", MergeSort.getInstance(), dataset2pow8,
-				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
-				dataset2pow14, dataset2pow15, dataset2pow16);
-		input(scenarioBuilder, "Quick Sort", QuickSort.getInstance(), dataset2pow8,
-				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
-				dataset2pow14, dataset2pow15, dataset2pow16);
-		input(scenarioBuilder, "Java Sort", JavaSort.getInstance(), dataset2pow8,
-				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
-				dataset2pow14, dataset2pow15, dataset2pow16);
-		input(scenarioBuilder, "Heap Sort", HeapSort.getInstance(), dataset2pow8,
-				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
-				dataset2pow14, dataset2pow15, dataset2pow16);
-		input(scenarioBuilder, "Smooth Sort", SmoothSort.getInstance(), dataset2pow8,
-				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
-				dataset2pow14, dataset2pow15, dataset2pow16);
-		
-		IScenario scenario1 = scenarioBuilder.build("Sorts competition", scenarioTitle, 900, 500);
-		
-		scenario1.execute(ScenarioConfig.of(EnumTimeGranularity.MICROSECONDS,
-				EnumScenarioOutputMode.TIME_ONLY, times, "Data Size", "Time"));
-		scenario1.output();
-		return scenario1;
-	}
-	
-	private static IScenario launchFlatWithAll(int times){
-		IGenerator generator = Generator.getInstance();
-		String scenarioTitle = "FlatGenerationAll";
-		int flatValue = 42;
-		int size = 2 ^ 8;
-		
-		IData dataset2pow8 = generator.flatGeneration(size, flatValue);
-		IData dataset2pow9 = generator.flatGeneration(size << 1, flatValue);
-		IData dataset2pow10 = generator.flatGeneration(size << 2, flatValue);
-		IData dataset2pow11 = generator.flatGeneration(size << 3, flatValue);
-		IData dataset2pow12 = generator.flatGeneration(size << 4, flatValue);
-		IData dataset2pow13 = generator.flatGeneration(size << 5, flatValue);
-		IData dataset2pow14 = generator.flatGeneration(size << 6, flatValue);
-		IData dataset2pow15 = generator.flatGeneration(size << 7, flatValue);
-		IData dataset2pow16 = generator.flatGeneration(size << 8, flatValue);
-		
-		IScenarioBuilder scenarioBuilder = ScenarioBuilder.getInstance();
-
-		input(scenarioBuilder, "Insertion Sort", InsertionSort.getInstance(), dataset2pow8,
-				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
-				dataset2pow14, dataset2pow15, dataset2pow16);
-		input(scenarioBuilder, "Merge Sort", MergeSort.getInstance(), dataset2pow8,
-				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
-				dataset2pow14, dataset2pow15, dataset2pow16);
-		input(scenarioBuilder, "Quick Sort", QuickSort.getInstance(), dataset2pow8,
-				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
-				dataset2pow14, dataset2pow15, dataset2pow16);
-		input(scenarioBuilder, "Java Sort", JavaSort.getInstance(), dataset2pow8,
-				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
-				dataset2pow14, dataset2pow15, dataset2pow16);
-		input(scenarioBuilder, "Heap Sort", HeapSort.getInstance(), dataset2pow8,
-				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
-				dataset2pow14, dataset2pow15, dataset2pow16);
-		input(scenarioBuilder, "Smooth Sort", SmoothSort.getInstance(), dataset2pow8,
-				dataset2pow9, dataset2pow10, dataset2pow11, dataset2pow12, dataset2pow13,
-				dataset2pow14, dataset2pow15, dataset2pow16);
-		
-		IScenario scenario1 = scenarioBuilder.build("Sorts competition", scenarioTitle, 900, 500);
-		
-		scenario1.execute(ScenarioConfig.of(EnumTimeGranularity.MICROSECONDS,
-				EnumScenarioOutputMode.TIME_ONLY, times, "Data Size", "Time"));
-		scenario1.output();
-		return scenario1;
-	}
-	
 	private static void input(IScenarioBuilder on, String title, ISort sortAlgo, IData... datasets){
 		for(IData data : datasets)
 			on.addEntry(title, sortAlgo, data);
 	}
 	
-	private static void smoothCheck() {
-		IGenerator generator = Generator.getInstance();
-		IData dataset1 = generator.randomGeneration(10, -10, 10, EnumRandomGenerationBound.N);
-		IData dataset2 = generator.randomGeneration(10, -10, 20, EnumRandomGenerationBound.N);
-		IData dataset3 = generator.randomGeneration(10, -10, 30, EnumRandomGenerationBound.N);
-		IData dataset4 = generator.randomGeneration(100, -100, 100, EnumRandomGenerationBound.N);
-		
-		IScenarioBuilder scenarioBuilder = ScenarioBuilder.getInstance();
-
-		scenarioBuilder.addEntry("Smooth test 1", SmoothSort.getInstance(), dataset1);
-		scenarioBuilder.addEntry("Smooth test 2", SmoothSort.getInstance(), dataset2);
-		scenarioBuilder.addEntry("Smooth test 3", SmoothSort.getInstance(), dataset3);
-		scenarioBuilder.addEntry("Smooth test 4", SmoothSort.getInstance(), dataset4);
-		IScenario scenarioSmooth = scenarioBuilder.build("Random generation Smooth", "Random generation Smooth", 900, 500);
-
-		scenarioSmooth.execute(ScenarioConfig.of(EnumTimeGranularity.MICROSECONDS,
-				EnumScenarioOutputMode.DETAILED, 1, "Data Size", "Time"));
-		
-		scenarioSmooth.output();
-	}
 }

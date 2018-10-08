@@ -1,0 +1,77 @@
+Time granularity: microseconds
+
+[Fast Merge:
+3,Fast Merge:
+2,Fast Merge:
+3,Fast Merge:
+4,Fast Merge:
+5,Fast Merge:
+6,Fast Merge:
+4,Fast Merge:
+5,Fast Merge:
+7,Fast Merge:
+7,Fast Merge:
+8,Fast Merge:
+9,Fast Merge:
+10,Fast Merge:
+11,Fast Merge:
+12,Fast Merge:
+13,Heap:
+1,Heap:
+1,Heap:
+1,Heap:
+1,Heap:
+2,Heap:
+3,Heap:
+3,Heap:
+4,Heap:
+6,Heap:
+5,Heap:
+4,Heap:
+5,Heap:
+6,Heap:
+7,Heap:
+8,Heap:
+9,Smooth:
+2,Smooth:
+2,Smooth:
+2,Smooth:
+2,Smooth:
+2,Smooth:
+3,Smooth:
+3,Smooth:
+4,Smooth:
+5,Smooth:
+6,Smooth:
+7,Smooth:
+7,Smooth:
+7,Smooth:
+9,Smooth:
+10,Smooth:
+11,Insertion:
+-2147483648,Insertion:
+0,Insertion:
+1,Insertion:
+0,Insertion:
+1,Insertion:
+2,Insertion:
+3,Insertion:
+4,Insertion:
+5,Insertion:
+0,Insertion:
+2,Insertion:
+3,Insertion:
+4,Insertion:
+4,Insertion:
+5,Insertion:
+6,Quick:
+2,Quick:
+2,Quick:
+3,Quick:
+3,Quick:
+2,Quick:
+4,Quick:
+6,Quick:
+7,Quick:
+9,Quick:
+11,13]

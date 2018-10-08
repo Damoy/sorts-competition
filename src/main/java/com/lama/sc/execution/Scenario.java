@@ -111,6 +111,10 @@ public class Scenario implements IScenario {
 		for(int i = 0; i < entries.size() - 1; ++i){
 			entry = entries.get(i);
 			sortAlgo = entry.getSortAlgorithm();
+			
+			output.append(sortAlgo.getTitle());
+			output.append(":\n");
+			
 			data = entry.getData();
 			averageExecutionTime = 0L;
 			
@@ -124,10 +128,10 @@ public class Scenario implements IScenario {
 			
 			averageExecutionTime = Utils.log2(Time.getComputedTime(averageExecutionTime / times, timeGranularity));
 			
-			output.append(data.toString());
-			output.append("\n");
-			output.append(averageExecutionTime);
-			output.append("\n");
+			// output.append(data.toString());
+			// output.append("\n");
+			// output.append(averageExecutionTime);
+			// output.append("\n");
 			
 			// updating the visualizer
 			visualiser.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()), averageExecutionTime);
@@ -150,10 +154,10 @@ public class Scenario implements IScenario {
 		
 		averageExecutionTime = Utils.log2(Time.getComputedTime(averageExecutionTime / times, timeGranularity));
 		
-		output.append(data.toString());
-		output.append("\n");
-		output.append(averageExecutionTime);
-		output.append("\n");
+		// output.append(data.toString());
+		// output.append("\n");
+		// output.append(averageExecutionTime);
+		// output.append("\n");
 		
 		// updating the visualizer
 		visualiser.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()), averageExecutionTime);

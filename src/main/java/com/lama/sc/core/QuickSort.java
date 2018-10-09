@@ -2,6 +2,9 @@ package com.lama.sc.core;
 
 import com.lama.sc.model.IData;
 
+/**
+ * Classic quick sort.
+ */
 public class QuickSort implements ISort {
 	
 	private final static ISort INSTANCE = new QuickSort();

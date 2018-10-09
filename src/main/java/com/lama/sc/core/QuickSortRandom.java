@@ -3,6 +3,9 @@ package com.lama.sc.core;
 import com.lama.sc.model.IData;
 import com.lama.sc.utils.Utils;
 
+/**
+ * Quick sort using random pivot.
+ */
 public class QuickSortRandom implements ISort {
 	
 	private final static ISort INSTANCE = new QuickSortRandom();
@@ -29,7 +32,13 @@ public class QuickSortRandom implements ISort {
 	}
 	
 	private int partition(IData data, int low, int high) {
-		int pivot = Utils.irand(low, high);
+		// random pivot
+		int randPivot = Utils.irand(low, high);
+		int tmp = data.get(high);
+		data.set(high, data.get(randPivot));
+		data.set(randPivot, tmp);
+		
+		int pivot = data.get(high);
 		int l = low - 1;
 
 		for (int i = low; i < high; ++i) {

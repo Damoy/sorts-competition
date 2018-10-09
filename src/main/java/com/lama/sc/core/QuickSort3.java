@@ -2,6 +2,9 @@ package com.lama.sc.core;
 
 import com.lama.sc.model.IData;
 
+/**
+ * Quick sort using median 3 pivot.
+ */
 public class QuickSort3 implements ISort {
 	
 	private final static ISort INSTANCE = new QuickSort3();
@@ -28,7 +31,13 @@ public class QuickSort3 implements ISort {
 	}
 	
 	private int partition(IData data, int low, int high) {
-		int pivot = median(data, low, high);
+		// median 3 pivot
+		int m3 = median(data, low, high);
+		int tmp = data.get(m3);
+		data.set(m3, data.get(high));
+		data.set(high, tmp);
+		
+		int pivot = data.get(high);
 		int l = low - 1;
 
 		for (int i = low; i < high; ++i) {
@@ -50,24 +59,25 @@ public class QuickSort3 implements ISort {
 	private int median(IData data, int low, int high) {
 		int mid = (low + high) >> 1;
 			
-		if(data.get(low) < data.get(high))
-			swap(data, low, high);
+		if(data.get(low) < data.get(high)) {
+			int tmp = data.get(low);
+			data.set(low, data.get(high));
+			data.set(high, tmp);
+		}
+		if(data.get(mid) < data.get(low)) {
+			int tmp = data.get(low);
+			data.set(low, data.get(high));
+			data.set(high, tmp);			
+		}
 		
-		if(data.get(mid) < data.get(low))
-			swap(data, mid, low);
-		
-		if(data.get(high) < data.get(mid))
-			swap(data, high, mid);
+		if(data.get(high) < data.get(mid)) {
+			int tmp = data.get(low);
+			data.set(low, data.get(high));
+			data.set(high, tmp);		}
 		
 		return mid;
 	}
 	
-	private void swap(IData data, int low, int high) {
-		int tmp = data.get(low);
-		data.set(low, data.get(high));
-		data.set(low, tmp);
-	}
-
 	@Override
 	public String getTitle() {
 		return "Quick3";

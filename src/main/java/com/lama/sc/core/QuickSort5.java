@@ -5,9 +5,16 @@ import java.util.Arrays;
 import com.lama.sc.model.Data;
 import com.lama.sc.model.IData;
 
+/**
+ * Quick sort with median5 pivot.
+ * Median 5 calculation uses MedianOfMedians algorithm.
+ * 
+ * https://en.wikipedia.org/wiki/Median_of_medians
+ */
 public class QuickSort5 implements ISort {
 	
 	private final static ISort INSTANCE = new QuickSort5();
+	private final static int SUBLIST_LENGTH = 5;
 
 	private QuickSort5(){}
 
@@ -17,7 +24,15 @@ public class QuickSort5 implements ISort {
 
 	@Override
 	public IData process(IData data) {
-		return sort(data, 0, data.getLength() - 1);
+		int l1 = data.getLength() - 1;
+		
+		sort(data, 0, l1);
+		
+		int tmp = data.get(l1);
+		data.set(l1, data.get(l1 - 1));
+		data.set(l1 - 1, tmp);
+		
+		return data;
 	}
 	
 	private IData sort(IData data, int low, int high) {
@@ -31,6 +46,10 @@ public class QuickSort5 implements ISort {
 	}
 	
 	private int partition(IData data, int low, int high) {
+		// median 5 pivot using Median of medians algorithm
+		// swap(data, MedianOfMedians.findMedian(data), high);
+		
+		// int pivot = data.get(high);
 		int pivot = MedianOfMedians.findMedian(data);
 		int l = low - 1;
 
@@ -58,7 +77,7 @@ public class QuickSort5 implements ISort {
 	private static class MedianOfMedians {
 		
 		public static int findMedian(IData data) {
-			return findMedianUtil(data, ((data.getLength()) >> 1) + 1, 0, data.getLength() - 1);
+			return findMedianUtil(data, SUBLIST_LENGTH, 0, data.getLength() - 1);
 		}
 
 		private static int findMedianUtil(IData data, int k, int low, int high) {

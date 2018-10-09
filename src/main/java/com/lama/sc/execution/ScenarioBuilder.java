@@ -20,17 +20,26 @@ public class ScenarioBuilder implements IScenarioBuilder {
 		return INSTANCE;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IScenarioBuilder addEntry(String entryTitle, ISort sortAlgo, IData data) {
 		entries.add(ScenarioEntry.of(entryTitle, sortAlgo, data));
 		return this;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IScenario build(String applicationTitle, String scenarioTitle, int width, int height) {
 		return new Scenario(applicationTitle, scenarioTitle, width, height, entries);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IScenarioBuilder clear() {
 		entries = new ArrayList<>();

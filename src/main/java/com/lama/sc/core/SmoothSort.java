@@ -2,6 +2,8 @@ package com.lama.sc.core;
 import com.lama.sc.model.IData;
 
 /**
+ * Smooth sort implementation.
+ * 
  * Inspired by :
  * https://www.programcreek.com/java-api-examples/index.php?source_dir=TeraSpout-master/src/main/java/org/terasology/utilities/Sorting.java 
  */

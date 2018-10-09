@@ -6,11 +6,11 @@ import com.lama.sc.model.IData;
 /**
  * Iterative Quick sort using median 3 pivot.
  */
-public class IterativeQuickSort3 implements ISort {
+public class IterativeQuickSort3Swap implements ISort {
 
-	private final static ISort INSTANCE = new IterativeQuickSort3();
+	private final static ISort INSTANCE = new IterativeQuickSort3Swap();
 
-	private IterativeQuickSort3() {
+	private IterativeQuickSort3Swap() {
 	}
 
 	public static ISort getInstance() {
@@ -19,6 +19,10 @@ public class IterativeQuickSort3 implements ISort {
 
 	@Override
 	public IData process(IData data) {
+		if(data.getLength() > (int) Math.pow(2, 12)) {
+			return InsertionSort.getInstance().process(data);
+		}
+		
 		return sort(data, 0, data.getLength() - 1);
 	}
 
@@ -98,6 +102,6 @@ public class IterativeQuickSort3 implements ISort {
 
 	@Override
 	public String getTitle() {
-		return "IterativeQuickSort3";
+		return "IterativeQuickSort3Swap";
 	}
 }

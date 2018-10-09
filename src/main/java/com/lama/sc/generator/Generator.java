@@ -15,7 +15,10 @@ public class Generator implements IGenerator {
 		return INSTANCE;
 	}
 	
-	// TODO see subject
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public IData randomGeneration(int size, int min, int max, EnumRandomGenerationBound bound) {
 		IData data = Data.of(size);
 		
@@ -45,16 +48,25 @@ public class Generator implements IGenerator {
 		return data;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IData sortedGeneration(int size, int min, int max) {
 		return InsertionSort.getInstance().process(randomGeneration(size, min, max, EnumRandomGenerationBound.N));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IData reversedGeneration(int size, int min, int max) {
 		return sortedGeneration(size, min, max).reverse();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IData flatGeneration(int size, int value) {
 		IData data = Data.of(size);

@@ -77,6 +77,6 @@ public class IterativeQuickSortRandom implements ISort {
 
 	@Override
 	public String getTitle() {
-		return "IterativeQuickSort";
+		return "IterativeQuickSortRand";
 	}
 }

@@ -6,7 +6,7 @@ import com.lama.sc.model.Data;
 import com.lama.sc.model.IData;
 
 /**
- * Quick sort with median5 pivot.
+ * Recursive Quick sort with median5 pivot.
  * Median 5 calculation uses MedianOfMedians algorithm.
  * 
  * https://en.wikipedia.org/wiki/Median_of_medians

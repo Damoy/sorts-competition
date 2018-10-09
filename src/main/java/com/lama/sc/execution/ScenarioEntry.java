@@ -19,16 +19,25 @@ public class ScenarioEntry implements IScenarioEntry {
 		return new ScenarioEntry(title, sortAlgo, data);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IData getData() {
 		return data;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ISort getSortAlgorithm() {
 		return sortAlgo;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getTitle() {
 		return title;

@@ -2,6 +2,9 @@ package com.lama.sc.core;
 
 import com.lama.sc.model.IData;
 
+/**
+ * Classic Insertion Sort
+ */
 public class InsertionSort implements ISort{
 	
 	private final static ISort INSTANCE = new InsertionSort();

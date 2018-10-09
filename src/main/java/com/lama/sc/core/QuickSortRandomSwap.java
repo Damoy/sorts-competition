@@ -4,7 +4,7 @@ import com.lama.sc.model.IData;
 import com.lama.sc.utils.Utils;
 
 /**
- * Quick sort using random pivot.
+ * Recursive Quick sort using random pivot.
  * 
  * Swaps to Insertion sort if StackOverflowError is thrown.
  */

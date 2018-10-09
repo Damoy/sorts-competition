@@ -36,6 +36,9 @@ public class SortVisualizer extends JFrame implements ISortVisualiser{
 		this.yAxisTitle = yAxisTitle;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ISortVisualiser build(){
 		// based on the dataset we create the chart
@@ -51,6 +54,9 @@ public class SortVisualizer extends JFrame implements ISortVisualiser{
 		return this;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void launch(){
 		pack();

@@ -4,6 +4,9 @@ import java.util.Arrays;
 
 import com.lama.sc.model.IData;
 
+/**
+ * Java sort: Dual pivot quick sort.
+ */
 public class JavaSort implements ISort {
 	
 	private final static ISort INSTANCE = new JavaSort();

@@ -26,9 +26,12 @@ public class Scenario implements IScenario {
 		this.chartWidth = chartWidth;
 		this.chartHeight = chartHeight;
 		this.output = new StringBuilder();
-		// this.visualiser = new SortVisualizer(applicationTitle, scenarioTitle, chartWidth, chartHeight, null, null);
+		this.visualiser = new SortVisualizer(applicationTitle, scenarioTitle, chartWidth, chartHeight, null, null);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void execute(ScenarioConfig config) {
 		clear();
@@ -172,11 +175,17 @@ public class Scenario implements IScenario {
 		visualiser = new SortVisualizer(applicationTitle, scenarioTitle, chartWidth, chartHeight, null, null);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void display() {
 		Utils.println(toString());
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void output() {
 		Utils.toFile(scenarioTitle, toString());

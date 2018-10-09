@@ -3,7 +3,7 @@ package com.lama.sc.core;
 import com.lama.sc.model.IData;
 
 /**
- * Classic quick sort.
+ * Recursive Classic quick sort.
  * 
  * Swaps to Insertion sort if StackOverflowError is thrown.
  */

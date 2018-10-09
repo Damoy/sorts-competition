@@ -3,7 +3,7 @@ package com.lama.sc.core;
 import com.lama.sc.model.IData;
 
 /**
- * Quick sort using median 3 pivot.
+ * Recursive Quick sort using median 3 pivot.
  * Swaps to Insertion sort if StackOverflowError is thrown.
  */
 public class QuickSort3Swap implements ISort {

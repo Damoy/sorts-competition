@@ -3,7 +3,7 @@ package com.lama.sc.core;
 import com.lama.sc.model.IData;
 
 /**
- * Classic quick sort.
+ * Recursive quick sort.
  */
 public class QuickSort implements ISort {
 	

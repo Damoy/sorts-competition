@@ -3,6 +3,10 @@ package com.lama.sc.core;
 import com.lama.sc.model.Data;
 import com.lama.sc.model.IData;
 
+/**
+ * Classic merge sort.
+ * Uses temporary data.
+ */
 public class MergeSort implements ISort {
 
 	private final static ISort INSTANCE = new MergeSort();

@@ -2,6 +2,9 @@ package com.lama.sc.core;
 
 import com.lama.sc.model.IData;
 
+/**
+ * Merge sort using only one buffer.
+ */
 public class FastMergeSort implements ISort {
 
 	private final static ISort INSTANCE = new FastMergeSort();

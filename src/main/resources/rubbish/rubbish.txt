@@ -230,3 +230,33 @@
 		bestOptimumSortRandom(100, EnumRandomGenerationBound.N);
 
 		1. bestOptimumSortRandom-100-N
+		
+		
+		
+			private static int getMedianOfFive(IData data) {
+		Random rand = new Random();
+		
+		int one = rand.nextInt(data.getLength());
+		int two = rand.nextInt(data.getLength());
+		int three = rand.nextInt(data.getLength());
+		int four = rand.nextInt(data.getLength());
+		int five = rand.nextInt(data.getLength());
+		
+		int[] tmp = {
+				data.get(one), data.get(two), data.get(three),
+				data.get(four), data.get(five)
+		};
+		
+		Arrays.sort(tmp);
+		
+		if (tmp[2] == data.get(one))
+			return one;
+		else if (tmp[2] == data.get(two))
+			return two;
+		else if (tmp[2] == data.get(three))
+			return three;
+		else if (tmp[2] == data.get(four))
+			return four;
+		
+		return five;
+	}

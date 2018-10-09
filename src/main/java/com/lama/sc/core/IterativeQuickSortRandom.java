@@ -2,15 +2,16 @@ package com.lama.sc.core;
 
 import com.lama.sc.model.Data;
 import com.lama.sc.model.IData;
+import com.lama.sc.utils.Utils;
 
 /**
- * Classic iterative Quick Sort
+ * Quick sort using random pivot.
  */
-public class IterativeQuickSort implements ISort {
+public class IterativeQuickSortRandom implements ISort {
 
-	private final static ISort INSTANCE = new IterativeQuickSort();
+	private final static ISort INSTANCE = new IterativeQuickSortRandom();
 
-	private IterativeQuickSort() {
+	private IterativeQuickSortRandom() {
 	}
 
 	public static ISort getInstance() {
@@ -23,6 +24,12 @@ public class IterativeQuickSort implements ISort {
 	}
 
 	private int partition(IData data, int low, int high) {
+		// random pivot
+		int randPivot = Utils.irand(low, high);
+		int temp = data.get(high);
+		data.set(high, data.get(randPivot));
+		data.set(randPivot, temp);
+		
 		int p = data.get(high);
 		int i = (low - 1);
 		

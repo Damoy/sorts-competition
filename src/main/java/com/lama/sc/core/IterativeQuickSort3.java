@@ -4,13 +4,13 @@ import com.lama.sc.model.Data;
 import com.lama.sc.model.IData;
 
 /**
- * Classic iterative Quick Sort
+ * Iterative Quick sort using median 3 pivot.
  */
-public class IterativeQuickSort implements ISort {
+public class IterativeQuickSort3 implements ISort {
 
-	private final static ISort INSTANCE = new IterativeQuickSort();
+	private final static ISort INSTANCE = new IterativeQuickSort3();
 
-	private IterativeQuickSort() {
+	private IterativeQuickSort3() {
 	}
 
 	public static ISort getInstance() {
@@ -23,6 +23,12 @@ public class IterativeQuickSort implements ISort {
 	}
 
 	private int partition(IData data, int low, int high) {
+		// median 3 pivot
+		int m3 = median(data, low, high);
+		int temp = data.get(m3);
+		data.set(m3, data.get(high));
+		data.set(high, temp);
+		
 		int p = data.get(high);
 		int i = (low - 1);
 		
@@ -40,6 +46,28 @@ public class IterativeQuickSort implements ISort {
 		data.set(high, tmp);
 
 		return i + 1;
+	}
+	
+	private int median(IData data, int low, int high) {
+		int mid = (low + high) >> 1;
+			
+		if(data.get(low) < data.get(high)) {
+			int tmp = data.get(low);
+			data.set(low, data.get(high));
+			data.set(high, tmp);
+		}
+		if(data.get(mid) < data.get(low)) {
+			int tmp = data.get(low);
+			data.set(low, data.get(high));
+			data.set(high, tmp);			
+		}
+		
+		if(data.get(high) < data.get(mid)) {
+			int tmp = data.get(low);
+			data.set(low, data.get(high));
+			data.set(high, tmp);		}
+		
+		return mid;
 	}
 
 	private IData sort(IData data, int l, int h) {

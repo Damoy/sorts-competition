@@ -50,6 +50,7 @@ public class Scenario implements IScenario {
 		EnumTimeGranularity timeGranularity = config.getTimeGranularity();
 		int times = config.getTimes();
 		
+		// TODO enable visualization
 		// visualiser.setXAxisTitle(config.getVisualiserXLabel());
 		// visualiser.setYAxisTitle(config.getVisualiserYLabel());
 		
@@ -89,6 +90,7 @@ public class Scenario implements IScenario {
 			output.append(EnumTimeGranularity.getString(timeGranularity));
 			output.append("\n");
 			
+			// TODO enable visualization
 			// updating the visualizer
 			//visualiser.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()), averageExecutionTime);
 		}
@@ -97,6 +99,7 @@ public class Scenario implements IScenario {
 	}
 	
 	private void executeWithTimeOnlyMode(ScenarioConfig config) {
+		// TODO enable visualization
 		// visualiser.setXAxisTitle(config.getVisualiserXLabel());
 		// visualiser.setYAxisTitle(config.getVisualiserYLabel());
 		
@@ -138,6 +141,7 @@ public class Scenario implements IScenario {
 			// output.append(averageExecutionTime);
 			// output.append("\n");
 			
+			// TODO enable visualization
 			// updating the visualizer
 			//visualiser.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()), averageExecutionTime);
 			output.append(averageExecutionTime);
@@ -164,6 +168,7 @@ public class Scenario implements IScenario {
 		// output.append(averageExecutionTime);
 		// output.append("\n");
 		
+		// // TODO enable visualization
 		// updating the visualizer
 		// visualiser.addEntry(sortAlgo.getTitle(), Utils.log2(data.getLength()), averageExecutionTime);
 		output.append(averageExecutionTime);
